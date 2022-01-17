@@ -1,16 +1,17 @@
 import { shallowMount } from "@vue/test-utils";
 import AvatarMenu from "@/components/AvatarDropDown.vue";
 
-describe("HelloWorld.vue", () => {
+describe("AvatarDropDown.vue", () => {
   it("renders all components props when passed", () => {
-    const did = "did:vda:0x472fe99271dBAdE2d3C7B64F6878318287852979";
-    const avatar = "";
-    const name = "Michael";
-    const mockLogoutFn = async () => jest.fn();
+
+    const logo = "logo";
+    const onError = async () => jest.fn();
+    const contextName = "onError";
+    const onSuccess = async () => jest.fn();
 
     const wrapper = shallowMount(AvatarMenu, {
-      props: { did, avatar, name, logout: mockLogoutFn },
+      props: { logo, contextName, onError, onSuccess },
     });
-    expect(wrapper.text()).toMatch(name);
+    expect(wrapper.element);
   });
 });

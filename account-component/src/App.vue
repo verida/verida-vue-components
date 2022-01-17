@@ -1,9 +1,12 @@
 <template>
-  <avatar-drop-down
-    :name="`Chinweike`"
-    :did="`did:vda:0x472fe99271dBAdE2d3C7B64F6878318287852979`"
-    :logout="() => {}"
-  />
+  <div>
+    <avatar-drop-down
+      :logo="logo"
+      :contextName="contextName"
+      :onError="onError"
+      :onSuccess="onSuccess"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -14,6 +17,16 @@ export default defineComponent({
   name: "App",
   components: {
     AvatarDropDown,
+  },
+  data() {
+    return {
+      contextName: "Verida: Account Component",
+      logo: "https://assets.verida.io/verida_login_request_logo_170x170.png",
+    };
+  },
+  methods: {
+    onSuccess() {},
+    onError() {},
   },
 });
 </script>
