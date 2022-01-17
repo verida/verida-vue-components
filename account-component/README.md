@@ -1,29 +1,47 @@
 # vue-verida-account-component
 
-## Project setup
+Open Source Vue Components for Verida
+
+- This component can be customized to suite your application styles and themes .
+
+here are the class names you can customize
+
+```cs
+.m-dropdown-top img {}
+
+..m-dropdown-logout {}
 ```
-npm install
+
+## Project setup
+
+```
+Yarn
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
-npm run serve
+yarn serve
 ```
 
 ### Compiles and minifies for production
+
 ```
-npm run build
+yarn build
 ```
 
 ### Run your unit tests
+
 ```
-npm run test:unit
+yarn test:unit
 ```
 
 ### Lints and fixes files
+
 ```
-npm run lint
+yarn lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).

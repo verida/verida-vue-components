@@ -1,4 +1,4 @@
-$primary:#eaea;
+$primary:rgba(12, 11, 11, 0.04);
 $text-color: rgba(12, 11, 11, 0.04);
 
 
@@ -10,10 +10,10 @@ $text-color: rgba(12, 11, 11, 0.04);
     align-items: center;
 
     span {
-        // font-weight: 600;
         margin: 0 1.5rem;
     }
 }
+
 
 .m-dropdown {
     position: relative;
@@ -35,11 +35,17 @@ $text-color: rgba(12, 11, 11, 0.04);
             width: 2.5rem;
         }
 
-        &.show {
+        &-active {
             img {
                 border: 3px $primary solid;
             }
         }
+
+        // &.show {
+        //     img {
+        //         border: 3px $primary solid;
+        //     }
+        // }
     }
 
     &-logout {
@@ -78,7 +84,7 @@ $text-color: rgba(12, 11, 11, 0.04);
                 &:hover {
                     background: rgb(163, 163, 163);
                     border-radius: 50%;
-                
+
                 }
             }
 
@@ -93,9 +99,4 @@ $text-color: rgba(12, 11, 11, 0.04);
         }
 
     }
-}
-
-
-.def-style {
-    background-color: red !important;
 }

@@ -1,10 +1,10 @@
 <template>
-  <div class="user-menu-widget">
+  <div class="user-menu-widget" :style="styles">
     <span>{{ name }}</span>
     <div class="m-dropdown">
       <div
         @click="toggleDropdown"
-        :class="['m-dropdown-top', isOpened && 'show']"
+        :class="[isOpened ? 'm-dropdown-top-active' : 'm-dropdown-top']"
       >
         <img height="40" v-if="avatar" alt="user-avatar" :src="avatar" />
         <img
@@ -24,7 +24,6 @@
             >
               {{ truncateDID(did) }}</a
             >
-
             <img
               height="20"
               @click="clipboard(did)"
@@ -57,7 +56,7 @@ export default defineComponent({
     };
   },
   props: {
-    className: {
+    styles: {
       type: String,
       required: false,
     },
@@ -91,6 +90,15 @@ export default defineComponent({
     truncateDID(did) {
       return did.slice(0, 13);
     },
+  },
+  created() {
+    window.addEventListener("click", () => {
+      const menuElement = document.querySelector(".user-menu-widget");
+
+      if (!menuElement && this.isOpened) {
+        this.isOpened = !this.isOpened;
+      }
+    });
   },
 });
 </script>

@@ -1,6 +1,5 @@
 <template>
   <avatar-drop-down
-    className="def-style"
     :name="`Chinweike`"
     :did="`did:vda:0x472fe99271dBAdE2d3C7B64F6878318287852979`"
     :logout="() => {}"
@@ -18,3 +17,4 @@ export default defineComponent({
   },
 });
 </script>
+
