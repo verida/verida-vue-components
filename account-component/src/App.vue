@@ -12,6 +12,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import AvatarDropDown from "./components/AvatarDropDown.vue";
+import { Context } from "@verida/client-ts";
 
 export default defineComponent({
   name: "App",
@@ -25,8 +26,12 @@ export default defineComponent({
     };
   },
   methods: {
-    onSuccess() {},
-    onError() {},
+    onSuccess(response: Context) {
+      console.log("App Context", response);
+    },
+    onError(error: Error) {
+      console.log("Login Error", error);
+    },
   },
 });
 </script>

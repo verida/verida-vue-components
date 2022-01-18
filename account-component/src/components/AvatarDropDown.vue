@@ -6,7 +6,9 @@
       :color="loaderIconColor || `#000`"
     />
     <div v-else-if="connected" class="user-menu-widget" :style="styles">
-      <span class="user-menu-widget-title">{{ profile.name }}</span>
+      <div class="user-menu-widget-title">
+        <span>{{ profile.name }}</span>
+      </div>
       <div class="m-dropdown">
         <div
           @click="toggleDropdown"
