@@ -7,5 +7,5 @@ updates:
   - package-ecosystem: "npm"
     directory: "/account-component"
     schedule:
-      interval: "daily"
-      # day: "tuesday"
+      interval: "weekly"
+      day: "tuesday"
