@@ -30,6 +30,7 @@ $text-color: rgba(12, 11, 11, 0.04);
 }
 
 .login-section {
+    cursor: pointer;
     @include setBoxContent(center);
     background: none;
     outline: none;

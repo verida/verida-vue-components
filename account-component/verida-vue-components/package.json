@@ -1,6 +1,6 @@
 {
-	"name": "vue-chinweike",
-	"version": "1.0.7",
+	"name": "@verida/verida-vue-components",
+	"version": "0.1.1",
 	"description": "",
 	"main": "dist/verida-vue-components.ssr.js",
 	"browser": "dist/verida-vue-components.esm.js",
@@ -25,7 +25,6 @@
 		"@verida/account-web-vault": "^1.1.7",
 		"@verida/client-ts": "^1.1.10",
 		"store": "^2.0.12",
-		"vue-chinweike": "^1.0.7",
 		"vue-clipboard2": "^0.3.3",
 		"vue-spinner": "^1.0.4"
 	},

@@ -70,7 +70,7 @@
 <script>
 import { defineComponent } from "vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import VeridaHelper from "./helpers/VeridaHelper";
+import VeridaHelper from "../helpers/VeridaHelper";
 
 export default defineComponent({
   name: "UserMenu",
