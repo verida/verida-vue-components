@@ -99,6 +99,10 @@ export default defineComponent({
       type: Function,
       required: true,
     },
+    onLogout: {
+      type: Function,
+      required: true,
+    },
     contextName: {
       type: String,
       required: true,
@@ -156,6 +160,7 @@ export default defineComponent({
     async logout() {
       await VeridaHelper.logout();
       this.connected = false;
+      this.onLogout();
     },
     async init() {
       const hasSession = VeridaHelper.autoLogin();
