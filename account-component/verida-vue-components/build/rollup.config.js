@@ -11,6 +11,7 @@ import PostCSS from 'rollup-plugin-postcss';
 import { terser } from 'rollup-plugin-terser';
 import ttypescript from 'ttypescript';
 import typescript from 'rollup-plugin-typescript2';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 import minimist from 'minimist';
 
 // Get browserslist config and remove ie from es build targets
@@ -113,6 +114,7 @@ if (!argv.format || argv.format === 'es') {
         useTsconfigDeclarationDir: true,
         emitDeclarationOnly: true,
       }),
+      nodePolyfills(),
       babel({
         ...baseConfig.plugins.babel,
         presets: [

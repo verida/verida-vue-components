@@ -178,3 +178,120 @@ export default defineComponent({
   },
 });
 </script>
+<style  scoped>
+@font-face {
+  font-family: "Sora";
+  src: url("~@/assets/fonts/sora/Sora-Bold.ttf") format("truetype"),
+    url("~@/assets/fonts/sora/Sora-ExtraBold.ttf") format("truetype"),
+    url("~@/assets/fonts/sora/Sora-ExtraLight.ttf") format("truetype"),
+    url("~@/assets/fonts/sora/Sora-Light.ttf") format("truetype"),
+    url("~@/assets/fonts/sora/Sora-Medium.ttf") format("truetype"),
+    url("~@/assets/fonts/sora/Sora-Regular.ttf") format("truetype"),
+    url("~@/assets/fonts/sora/Sora-Thin.ttf") format("truetype"),
+    url("~@/assets/fonts/sora/Sora-SemiBold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+.user-menu {
+  font-family: "Sora", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-section {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  outline: none;
+  border: none;
+}
+
+.login-section > * {
+  margin: 0 0.4rem;
+}
+
+.user-menu-widget {
+  position: relative;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-menu-widget-title {
+  margin: 0 1.5rem;
+  padding: auto;
+}
+
+.m-dropdown {
+  position: relative;
+  z-index: 2;
+}
+
+.m-dropdown span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.m-dropdown span a {
+  color: black;
+  margin-left: -0.2rem;
+}
+
+.m-dropdown-top {
+  background: #3333;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.m-dropdown-top img {
+  border-radius: 50%;
+}
+
+.m-dropdown-top-active img {
+  border-radius: 50%;
+}
+
+.m-dropdown-logout {
+  position: absolute;
+  top: 3.6rem;
+  text-align: left;
+  right: 0;
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0px 3px 4px #bbbbbb;
+}
+
+.m-dropdown-logout div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 11rem;
+  padding: 0.7rem 1rem;
+  border-top: 1px solid rgba(12, 11, 11, 0.04);
+  border-left: none;
+  border-bottom: none;
+  border-right: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+}
+
+.m-dropdown-logout div:hover {
+  background: rgba(12, 11, 11, 0.04);
+}
+.m-dropdown-logout div img:hover {
+  background: rgb(163, 163, 163);
+  border-radius: 50%;
+}
+</style>
