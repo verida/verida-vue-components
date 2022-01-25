@@ -1,6 +1,12 @@
 <template>
   <div>
-    <avatar-drop-down
+    <!-- <avatar-drop-down
+      :logo="logo"
+      :contextName="contextName"
+      :onError="onError"
+      :onSuccess="onSuccess"
+    /> -->
+    <vue-chinweike
       :logo="logo"
       :contextName="contextName"
       :onError="onError"
@@ -13,11 +19,13 @@
 import { defineComponent } from "vue";
 import AvatarDropDown from "./components/AvatarDropDown.vue";
 import { Context } from "@verida/client-ts";
+import VueChinweike from "vue-chinweike";
 
 export default defineComponent({
   name: "App",
   components: {
-    AvatarDropDown,
+    // AvatarDropDown,
+    VueChinweike,
   },
   data() {
     return {
