@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@verida/account-web-vault": "^1.1.7",
-    "@verida/client-ts": "^1.1.10",
+    "@verida/client-ts": "^1.1.11",
     "core-js": "^3.6.5",
     "v-clipboard": "^2.2.3",
     "vue": "^3.2.28",
