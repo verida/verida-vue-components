@@ -30,4 +30,4 @@ Using the `vue-sfc-rollup` run these command
 
 > NB: enter npm package name using this prefix e.g `@verida/vue-my-component`
 
-in the cmd options select the project directory ti be `./component/name-of-the-component`
+in the cmd options select the project directory to be `./component/name-of-the-component`
