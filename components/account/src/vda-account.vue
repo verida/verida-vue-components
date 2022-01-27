@@ -6,10 +6,8 @@
       :color="loaderIconColor || `#000`"
     />
     <div v-else-if="connected" class="user-menu-widget" :style="styles">
-      <div class="user-menu-widget-title">
-        <span>{{ profile.name }}</span>
-      </div>
       <div class="m-dropdown">
+        <span>{{ profile.name }}</span>
         <div
           @click="toggleDropdown"
           :class="[isOpened ? 'm-dropdown-top-active' : 'm-dropdown-top']"
@@ -208,9 +206,9 @@ export default defineComponent({
 .user-menu-widget {
   position: relative;
   font-family: sans-serif;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .user-menu-widget-title {
@@ -219,14 +217,14 @@ export default defineComponent({
 }
 
 .m-dropdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   position: relative;
   z-index: 2;
 }
 
 .m-dropdown span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 0.7rem 1rem 0 0;
 }
 
 .m-dropdown span a {
@@ -256,7 +254,6 @@ export default defineComponent({
 .m-dropdown-logout {
   position: absolute;
   top: 3.6rem;
-  text-align: left;
   right: 0;
   background: #ffffff;
   border-radius: 4px;

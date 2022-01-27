@@ -1,24 +1,33 @@
-# sb-test
+# Verida Vue Component Library (Monorepo)
 
-## Project setup
+- This project leverages the following frameworks and libraries
+
+- Storybook : This helps to test and visualize component in isolation
+
+- Lerna : Manages different component and publish them independently
+
+- Vue-SFC-Rollup: This creates a Vue project setup that help develop each components and also creates amm optimized build for npm publish.
+
+## Development mode
+
+View and interact with components using storybook
+
+run the following commands
+
 ```
-npm install
+  yarn
+
+  yarn storybook
 ```
 
-### Compiles and hot-reloads for development
+## Create a new component folder
+
+Using the `vue-sfc-rollup` run these command
+
 ```
-npm run serve
+ yarn create-sfc
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+> NB: enter npm package name using this prefix e.g `@verida/vue-my-component`
 
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+in the cmd options select the project directory ti be `./component/name-of-the-component`

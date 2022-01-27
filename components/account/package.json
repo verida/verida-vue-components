@@ -1,5 +1,5 @@
 {
-	"name": "mike-vue-account",
+	"name": "@verida/vue-user-account",
 	"version": "1.0.3",
 	"description": "",
 	"main": "dist/vda-account.ssr.js",
