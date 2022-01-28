@@ -14,11 +14,13 @@ View and interact with components using storybook
 
 run the following commands
 
+Install packages for all components:
+
 ```
-  yarn
+  yarn install
 ```
 
-- Cd into each components and run `yarn` to install all dependencies used
+Run Storybook:
 
 ```
   yarn storybook

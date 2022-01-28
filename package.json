@@ -1,5 +1,5 @@
 {
-	"name": "Verida Vue Component",
+	"name": "verida-vue-component",
 	"description": "Open Source Vue Components for Verida",
 	"version": "0.1.0",
 	"private": true,
@@ -9,6 +9,7 @@
 		"url": "https://github.com/verida/verida-vue-components"
 	},
 	"scripts": {
+		"install": "lerna exec -- yarn install",
 		"test:unit": "vue-cli-service test:unit",
 		"storybook": "start-storybook -p 6006",
 		"build-storybook": "build-storybook",
