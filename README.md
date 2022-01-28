@@ -16,7 +16,11 @@ run the following commands
 
 ```
   yarn
+```
 
+- Cd into each components and run `yarn` to install all dependencies used
+
+```
   yarn storybook
 ```
 
