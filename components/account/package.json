@@ -1,6 +1,6 @@
 {
 	"name": "@verida/vue-user-account",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "",
 	"private": false,
 	"main": "dist/vda-account.ssr.js",
