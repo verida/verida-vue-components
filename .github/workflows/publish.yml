@@ -25,4 +25,4 @@ jobs:
       - name: 'Version and publish' # Interesting step
         env:
           GH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx lerna publish from-git --yes
+        run: lerna publish from-git
