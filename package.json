@@ -1,13 +1,14 @@
 {
-	"name": "verida-vue-component",
-	"description": "Open Source Vue Components for Verida",
-	"version": "0.1.0",
+	"name": "root",
 	"private": true,
 	"license": "SEE LICENSE  file",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/verida/verida-vue-components"
 	},
+	"workspaces": [
+		"components/*"
+	],
 	"scripts": {
 		"install": "lerna exec -- yarn install",
 		"test:unit": "vue-cli-service test:unit",
