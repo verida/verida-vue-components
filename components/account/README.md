@@ -1,4 +1,4 @@
-# vue-verida-account-component
+# verida user account component
 
 Open Source Vue Components for Verida
 
