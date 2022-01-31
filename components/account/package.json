@@ -2,7 +2,7 @@
 	"name": "@verida/vue-user-account",
 	"version": "0.1.0",
 	"description": "",
-	"private": true,
+	"private": false,
 	"main": "dist/vda-account.ssr.js",
 	"browser": "dist/vda-account.esm.js",
 	"module": "dist/vda-account.esm.js",
