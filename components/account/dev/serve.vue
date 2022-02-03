@@ -1,12 +1,10 @@
+
 <script lang="ts">
+/* eslint-disable @typescript-eslint/no-empty-interface */
 import { defineComponent } from "vue";
-import VdaAccount from "@/vda-account.vue";
 
 export default defineComponent({
   name: "ServeDev",
-  components: {
-    VdaAccount,
-  },
   data() {
     return {
       contextName: "Verida: Account Component",
@@ -15,23 +13,28 @@ export default defineComponent({
   },
   methods: {
     onSuccess(response: any) {
-      console.log("App Context", response);
+      //@ts-ignore
+      this.$vdaClient.initUser(response);
     },
     onError(error: Error) {
       console.log("Login Error", error);
     },
-    onLogout() {},
+    onLogout() {
+      console.log("hello");
+    },
   },
 });
 </script>
 
 <template>
   <div id="app">
-    <vda-account
-      :logo="logo"
-      :contextName="contextName"
+    <vda-account :logo="logo" :contextName="contextName" :onLogout="onLogout" />
+    <vda-login
       :onError="onError"
       :onSuccess="onSuccess"
+      :contextName="contextName"
+      :logo="logo"
+      :onLogout="onLogout"
     />
   </div>
 </template>

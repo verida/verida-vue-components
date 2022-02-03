@@ -1,33 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { EnvironmentType, Network } from "@verida/client-ts";
 import { EventEmitter } from "events";
-import store from 'store'
+import store from "store";
+
 import { hasSession, VaultAccount } from "@verida/account-web-vault";
+
 import { Profile, Connect } from "../interface";
 
 
 const VUE_APP_VAULT_CONTEXT_NAME = "Verida: Vault";
 
-const CONTEXT_NAME_IN_LOCAL_STORAGE = 'AppContext'
+const CONTEXT_NAME_IN_LOCAL_STORAGE = "AppContext";
 
-const VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER = "https://db.testnet.verida.io:5002/";
+const VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER =
+  "https://db.testnet.verida.io:5002/";
 
-const VUE_APP_LOGO_URL = "https://assets.verida.io/verida_login_request_logo_170x170.png";
-
+const VUE_APP_LOGO_URL =
+  "https://assets.verida.io/verida_login_request_logo_170x170.png";
 
 class VeridaHelpers extends EventEmitter {
-  private client: any;
-  public profile?: Profile;
+  public profile: Profile;
   public context: any;
   private account: any;
   public did?: string;
   public connected?: boolean;
-  public contextName?: string;
-
+  public contextName?: string | any;
 
   constructor() {
-    super()
-    this.contextName = store.get(CONTEXT_NAME_IN_LOCAL_STORAGE)
+    super();
+    this.contextName = store.get(CONTEXT_NAME_IN_LOCAL_STORAGE);
+    this.profile = {
+      avatar: {},
+      name: "",
+      country: "",
+    }
   }
 
   public async connect({ contextName, logo }: Connect): Promise<void> {
@@ -48,8 +54,8 @@ class VeridaHelpers extends EventEmitter {
     });
 
     if (!this.contextName) {
-      this.contextName = contextName
-      store.set(CONTEXT_NAME_IN_LOCAL_STORAGE, contextName)
+      this.contextName = contextName;
+      store.set(CONTEXT_NAME_IN_LOCAL_STORAGE, contextName);
     }
 
     this.context = await Network.connect({
@@ -74,10 +80,11 @@ class VeridaHelpers extends EventEmitter {
 
   private async initProfile(): Promise<void> {
     const client = await this.context.getClient();
-    const profile = await client.openPublicProfile(this.did, "Verida: Vault");
+    const profile = await client.openPublicProfile(this.did, VUE_APP_VAULT_CONTEXT_NAME);
     const cb = async () => {
       const data = await profile.getMany();
-      this.profile = data
+      this.profile = data;
+      this.saveProfileToLocalStorage(data, this.contextName)
       this.emit("profileChanged", this.profile);
     };
     profile.listen(cb);
@@ -88,20 +95,8 @@ class VeridaHelpers extends EventEmitter {
     return hasSession(this.contextName as string);
   }
 
-  async getProfile(did: string): Promise<boolean> {
-    const profileInstance = await this.client.openPublicProfile(
-      did,
-      VUE_APP_VAULT_CONTEXT_NAME,
-      "basicProfile"
-    );
-
-    if (profileInstance) {
-      this.profile = await profileInstance.getMany({}, {});
-      if (this.profile) {
-        this.profile.did = did;
-      }
-    }
-    return true;
+  public saveProfileToLocalStorage(profile: Profile, contextName: string) {
+    store.set(contextName, profile);
   }
 
   async logout(): Promise<void> {
@@ -109,8 +104,15 @@ class VeridaHelpers extends EventEmitter {
     this.context = null;
     this.account = null;
     this.connected = false;
+    this.profile = {
+      avatar: {},
+      name: "",
+      country: "",
+    }
     this.did = "";
+    store.remove(this.contextName as string)
     store.remove(CONTEXT_NAME_IN_LOCAL_STORAGE)
+    this.emit("profileChanged", this.profile);
   }
 }
 

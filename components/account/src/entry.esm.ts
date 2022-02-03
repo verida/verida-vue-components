@@ -1,25 +1,37 @@
 import { App, Plugin } from 'vue';
 
-// Import vue component
-import component from '@/vda-account.vue';
+// Import vue components
+import * as components from '@/lib-components/index';
+import VeridaHelper from './helpers/VeridaHelper';
+import module from './module/module';
 
-// Define typescript interfaces for installable component
-type InstallableComponent = typeof component & { install: Exclude<Plugin['install'], undefined> };
 
-// Default export is installable instance of component.
-// IIFE injects install function into component, allowing component
-// to be registered via Vue.use() as well as Vue.component(),
-export default /*#__PURE__*/((): InstallableComponent => {
-  // Assign InstallableComponent type
-  const installable = component as unknown as InstallableComponent;
 
-  // Attach install function executed by Vue.use()
-  installable.install = (app: App) => {
-    app.component('VdaAccount', installable);
-  };
-  return installable;
-})();
+// install function executed by Vue.use()
+const install: Exclude<Plugin['install'], undefined> = function installAccount(app: App, options: any) {
+  if (!options.store) {
+    throw new Error('Please provide vuex store.');
+  }
+  // Register toasts vuex module 
+  options.store.registerModule('vdaClient', module);
 
-// It's possible to expose named exports when writing components that can
-// also be used as directives, etc. - eg. import { RollupDemoDirective } from 'rollup-demo';
-// export const RollupDemoDirective = directive;
+  //register component
+
+  Object.entries(components).forEach(([componentName, component]) => {
+    app.component(componentName, component);
+  });
+  app.config.globalProperties.$VeridaHelper = VeridaHelper
+  app.config.globalProperties.$vdaClient = {
+    initUser: (args: any) => {
+      options.store.dispatch('initUser', args);
+    }
+  }
+};
+
+// Create module definition for Vue.use()
+export default install;
+
+// To allow individual component use, export components
+// each can be registered via Vue.component()
+export * from '@/lib-components/index';
+

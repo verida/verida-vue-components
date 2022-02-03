@@ -5,7 +5,7 @@
       :loading="loading"
       :color="loaderIconColor || `#000`"
     />
-    <div v-else-if="connected" class="user-menu-widget" :style="styles">
+    <div v-else-if="profile.name" class="user-menu-widget" :style="styles">
       <div class="m-dropdown">
         <span>{{ profile.name }}</span>
         <div
@@ -67,14 +67,13 @@
 
 <script>
 import { defineComponent } from "vue";
+import store from "store";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import VeridaHelper from "./helpers/VeridaHelper";
+import VeridaHelper from "../helpers/VeridaHelper";
 
 export default defineComponent({
   name: "UserMenu",
-  components: {
-    PulseLoader,
-  },
+  components: { PulseLoader },
   data() {
     return {
       isOpened: false,
@@ -89,13 +88,9 @@ export default defineComponent({
       type: String,
       required: false,
     },
-    onSuccess: {
-      type: Function,
-      required: true,
-    },
-    onError: {
-      type: Function,
-      required: true,
+    loaderIconColor: {
+      type: String,
+      required: false,
     },
     onLogout: {
       type: Function,
@@ -105,22 +100,12 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    logo: {
-      type: String,
-      required: false,
-    },
-    loaderIconColor: {
-      type: String,
-      required: false,
-    },
   },
   async beforeMount() {
     await this.init();
   },
   methods: {
-    clipboard(value) {
-      this.$copyText(value);
-    },
+    clipboard(value) {},
     toggleDropdown() {
       this.isOpened = !this.isOpened;
     },
@@ -136,10 +121,6 @@ export default defineComponent({
         if (!this.contextName) {
           return (this.error = "Context Name is required");
         }
-        await VeridaHelper.connect({
-          contextName: this.contextName,
-          logo: this.logo,
-        });
         this.connected = true;
         this.profile = VeridaHelper.profile;
         this.profile.avatar = VeridaHelper.profile.avatar.uri;
@@ -161,8 +142,9 @@ export default defineComponent({
       this.onLogout();
     },
     async init() {
-      const hasSession = VeridaHelper.autoLogin();
-      if (hasSession) {
+      const profileFromStore = store.get(this.contextName);
+      if (profileFromStore) {
+        this.profile = profileFromStore;
         await this.login();
       }
     },
@@ -170,13 +152,8 @@ export default defineComponent({
   created() {
     VeridaHelper.on("profileChanged", (profile) => {
       this.profile = profile;
+      this.profile.avatar = profile.avatar.uri;
       this.profile.did = VeridaHelper.did;
-    });
-    window.addEventListener("click", () => {
-      const menuElement = document.querySelector(".user-menu-widget");
-      if (!menuElement && this.isOpened) {
-        this.isOpened = !this.isOpened;
-      }
     });
   },
 });
@@ -206,9 +183,9 @@ export default defineComponent({
 .user-menu-widget {
   position: relative;
   font-family: sans-serif;
-  /* display: flex;
+  display: flex;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
 }
 
 .user-menu-widget-title {

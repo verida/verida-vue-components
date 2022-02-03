@@ -1,4 +1,3 @@
-
 // rollup.config.js
 import fs from 'fs';
 import path from 'path';
@@ -88,6 +87,7 @@ const globals = {
   // Provide global variable names to replace your external imports
   // eg. jquery: '$'
   vue: 'Vue',
+
 };
 
 // Customize configs for individual targets
@@ -98,7 +98,7 @@ if (!argv.format || argv.format === 'es') {
     input: 'src/entry.esm.ts',
     external,
     output: {
-      file: 'dist/vda-account.esm.js',
+      file: 'dist/account.esm.js',
       format: 'esm',
       exports: 'named',
     },
@@ -137,9 +137,9 @@ if (!argv.format || argv.format === 'cjs') {
     external,
     output: {
       compact: true,
-      file: 'dist/vda-account.ssr.js',
+      file: 'dist/account.ssr.js',
       format: 'cjs',
-      name: 'VdaAccount',
+      name: 'Account',
       exports: 'auto',
       globals,
     },
@@ -160,9 +160,9 @@ if (!argv.format || argv.format === 'iife') {
     external,
     output: {
       compact: true,
-      file: 'dist/vda-account.min.js',
+      file: 'dist/account.min.js',
       format: 'iife',
-      name: 'VdaAccount',
+      name: 'Account',
       exports: 'auto',
       globals,
     },
