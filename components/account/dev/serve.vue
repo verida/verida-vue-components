@@ -16,9 +16,7 @@ export default defineComponent({
       //@ts-ignore
       this.$vdaClient.initUser(response);
     },
-    onError(error: Error) {
-      console.log("Login Error", error);
-    },
+    onError() {},
     onLogout() {},
   },
 });
