@@ -19,9 +19,7 @@ export default defineComponent({
     onError(error: Error) {
       console.log("Login Error", error);
     },
-    onLogout() {
-      console.log("hello");
-    },
+    onLogout() {},
   },
 });
 </script>
