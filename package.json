@@ -1,7 +1,7 @@
 {
 	"name": "root",
 	"private": true,
-	"license": "SEE LICENSE  file",
+	"license": "ISC",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/verida/verida-vue-components"

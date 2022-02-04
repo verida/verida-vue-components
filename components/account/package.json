@@ -3,6 +3,7 @@
 	"version": "0.1.3",
 	"description": "",
 	"private": false,
+	"license": "ISC",
 	"main": "dist/account.ssr.js",
 	"browser": "dist/account.esm.js",
 	"module": "dist/account.esm.js",
