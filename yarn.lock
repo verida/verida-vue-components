@@ -12264,17 +12264,6 @@ micromatch@^4.0.0, micromatch@^4.0.2, micromatch@^4.0.4:
     braces "^3.0.1"
     picomatch "^2.2.3"
 
-mike-account@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/mike-account/-/mike-account-1.0.0.tgz#8e78422bdba344a24f5fdb720648f5713979c7f7"
-  integrity sha512-OQUPoeGUuS7HZqXsl7BbZt8J2uV6HiXnLKyWsUs/DX3IxVoCJ9UsTvHxGqP/QLccfJbPV3dEt7EVSuVGmoqDdg==
-  dependencies:
-    "@verida/account-web-vault" "^1.1.7"
-    "@verida/client-ts" "^1.1.10"
-    core-js "^3.6.5"
-    vue-clipboard2 "^0.3.3"
-    vue-spinner "^1.0.4"
-
 miller-rabin@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/miller-rabin/-/miller-rabin-4.0.1.tgz#f080351c865b0dc562a8462966daa53543c78a4d"

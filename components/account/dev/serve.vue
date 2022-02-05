@@ -7,7 +7,7 @@ export default defineComponent({
   name: "ServeDev",
   data() {
     return {
-      contextName: "Verida: Account Component",
+      contextName: "Verida: New ac",
       logo: "https://assets.verida.io/verida_login_request_logo_170x170.png",
     };
   },

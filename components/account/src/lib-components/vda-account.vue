@@ -38,7 +38,7 @@
             </span>
             <img
               height="20"
-              @click="clipboard(profile.did)"
+              @click="copyToClipBoard(profile.did)"
               src="https://s3.us-west-2.amazonaws.com/assets.verida.io/copy.png"
               alt="icon"
               title="Copy to clipboard"
@@ -109,7 +109,18 @@ export default defineComponent({
     await this.init();
   },
   methods: {
-    clipboard(value) {},
+    copyToClipBoard(value) {
+      this.$copyText(value).then(
+        function (e) {
+          alert("Copied");
+          console.log(e);
+        },
+        function (e) {
+          alert("Can not copy");
+          console.log(e);
+        }
+      );
+    },
     toggleDropdown() {
       this.isOpened = !this.isOpened;
     },

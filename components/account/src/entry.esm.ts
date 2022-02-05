@@ -4,6 +4,9 @@ import { App, Plugin } from 'vue';
 import * as components from '@/lib-components/index';
 import VeridaHelper from './helpers/VeridaHelper';
 import module from './module/module';
+import VueClipboard from 'vue-clipboard2'
+
+
 
 
 
@@ -14,6 +17,10 @@ const install: Exclude<Plugin['install'], undefined> = function installAccount(a
   }
   // Register toasts vuex module 
   options.store.registerModule('vdaClient', module);
+
+  // Register Vue copy to clip board 
+
+  app.use(VueClipboard)
 
   //register component
 
