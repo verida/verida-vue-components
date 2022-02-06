@@ -111,14 +111,8 @@ export default defineComponent({
   methods: {
     copyToClipBoard(value) {
       this.$copyText(value).then(
-        function (e) {
-          alert("Copied");
-          console.log(e);
-        },
-        function (e) {
-          alert("Can not copy");
-          console.log(e);
-        }
+        function (e) {},
+        function (e) {}
       );
     },
     toggleDropdown() {
