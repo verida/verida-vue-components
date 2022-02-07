@@ -8,7 +8,7 @@
 
 - Vue-SFC-Rollup: This creates a Vue project setup that help develop each components and also creates amm optimized build for npm publish.
 
-## Development mode
+## Development mode for storybook
 
 View and interact with components using storybook
 
@@ -20,10 +20,16 @@ Install packages for all components:
   yarn install
 ```
 
-Run Storybook:
+Storybook support is comming. 
+
+## Development for SFC (Single file component)
+
+cd into the component you want to run the dev mode locally and run this command
 
 ```
-  yarn storybook
+
+yarn && yarn serve 
+
 ```
 
 ## Create a new component folder

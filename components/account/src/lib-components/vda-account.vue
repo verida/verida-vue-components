@@ -5,7 +5,7 @@
       :loading="loading"
       :color="loaderIconColor || `#000`"
     />
-    <div v-else-if="connected" class="user-menu-widget" :style="styles">
+    <div v-else-if="profile.name" class="user-menu-widget" :style="styles">
       <div class="m-dropdown">
         <span>{{ profile.name }}</span>
         <div
@@ -38,7 +38,7 @@
             </span>
             <img
               height="20"
-              @click="clipboard(profile.did)"
+              @click="copyToClipBoard(profile.did)"
               src="https://s3.us-west-2.amazonaws.com/assets.verida.io/copy.png"
               alt="icon"
               title="Copy to clipboard"
@@ -67,14 +67,13 @@
 
 <script>
 import { defineComponent } from "vue";
+import store from "store";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import VeridaHelper from "./helpers/VeridaHelper";
+import VeridaHelper from "../helpers/VeridaHelper";
 
 export default defineComponent({
   name: "UserMenu",
-  components: {
-    PulseLoader,
-  },
+  components: { PulseLoader },
   data() {
     return {
       isOpened: false,
@@ -89,13 +88,9 @@ export default defineComponent({
       type: String,
       required: false,
     },
-    onSuccess: {
-      type: Function,
-      required: true,
-    },
-    onError: {
-      type: Function,
-      required: true,
+    loaderIconColor: {
+      type: String,
+      required: false,
     },
     onLogout: {
       type: Function,
@@ -105,11 +100,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    logo: {
-      type: String,
-      required: false,
-    },
-    loaderIconColor: {
+    onError: {
       type: String,
       required: false,
     },
@@ -118,8 +109,11 @@ export default defineComponent({
     await this.init();
   },
   methods: {
-    clipboard(value) {
-      this.$copyText(value);
+    copyToClipBoard(value) {
+      this.$copyText(value).then(
+        function (e) {},
+        function (e) {}
+      );
     },
     toggleDropdown() {
       this.isOpened = !this.isOpened;
@@ -136,15 +130,15 @@ export default defineComponent({
         if (!this.contextName) {
           return (this.error = "Context Name is required");
         }
-        await VeridaHelper.connect({
+        this.connected = true;
+        await this.$VeridaHelper.connect({
           contextName: this.contextName,
           logo: this.logo,
         });
-        this.connected = true;
-        this.profile = VeridaHelper.profile;
-        this.profile.avatar = VeridaHelper.profile.avatar.uri;
-        this.profile.did = VeridaHelper.did;
-        this.onSuccess(VeridaHelper.context);
+        this.profile = this.$VeridaHelper.profile;
+        this.profile.avatar = this.$VeridaHelper.profile.avatar.uri;
+        this.profile.did = this.$VeridaHelper.did;
+        this.onSuccess(this.$VeridaHelper.context);
       } catch (error) {
         this.handleError(error);
       } finally {
@@ -161,22 +155,18 @@ export default defineComponent({
       this.onLogout();
     },
     async init() {
-      const hasSession = VeridaHelper.autoLogin();
-      if (hasSession) {
+      const profileFromStore = store.get(this.contextName);
+      if (profileFromStore) {
+        this.profile = profileFromStore;
         await this.login();
       }
     },
   },
   created() {
-    VeridaHelper.on("profileChanged", (profile) => {
+    this.$VeridaHelper.on("profileChanged", (profile) => {
       this.profile = profile;
-      this.profile.did = VeridaHelper.did;
-    });
-    window.addEventListener("click", () => {
-      const menuElement = document.querySelector(".user-menu-widget");
-      if (!menuElement && this.isOpened) {
-        this.isOpened = !this.isOpened;
-      }
+      this.profile.avatar = profile.avatar.uri;
+      this.profile.did = this.$VeridaHelper.did;
     });
   },
 });
@@ -206,9 +196,9 @@ export default defineComponent({
 .user-menu-widget {
   position: relative;
   font-family: sans-serif;
-  /* display: flex;
+  display: flex;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
 }
 
 .user-menu-widget-title {
