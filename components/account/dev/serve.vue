@@ -30,6 +30,7 @@ export default defineComponent({
       :onSuccess="onSuccess"
       :contextName="contextName"
       :logo="logo"
+      loginText="Verida Vue Component"
       :onLogout="onLogout"
     />
   </div>

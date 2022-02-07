@@ -133,6 +133,7 @@ export default defineComponent({
 | onError         | function | true     | a callback function that log errors                                                                                                                                                                                                                    |
 | logo            | string   | false    | 170x170 png file                                                                                                                            |
 | contextName     | string   | true     | application name e.g `Verida : My APP`                                                                                                      |                                                                                               |
+| loginText     | string   | false     | Login Screen Text                              |                                                                                               |
 
 
 
