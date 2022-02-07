@@ -9,7 +9,7 @@
         <pulse-loader :loading="isLoading" />
       </div>
       <img src="https://assets.verida.io/verida_logo.svg" alt="verida-btn" />
-      <h3>Verifiable Credentials Demo</h3>
+      <h3>{{ loginText || "Verida SSO Login" }}</h3>
       <p>Use the button below to connect with Verida Vault</p>
       <button @click="connect">
         <img
@@ -53,6 +53,10 @@ export default defineComponent({
       type: String,
       required: false,
     },
+    loginText: {
+      type: String,
+      required: false,
+    },
   },
   components: {
     PulseLoader,
@@ -85,7 +89,9 @@ export default defineComponent({
     },
     handleError(error: any) {
       this.error = error;
-      this.onError(this.error);
+      if (this.onError) {
+        this.onError(this.error);
+      }
     },
   },
 });
