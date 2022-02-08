@@ -20,7 +20,7 @@ Install packages for all components:
   yarn install
 ```
 
-Storybook support is comming. 
+Storybook support is coming. 
 
 ## Development for SFC (Single file component)
 
