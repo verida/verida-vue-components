@@ -8,9 +8,6 @@ import VueClipboard from 'vue-clipboard2'
 
 
 
-
-
-// install function executed by Vue.use()
 const install: Exclude<Plugin['install'], undefined> = function installAccount(app: App, options: any) {
   if (!options.store) {
     throw new Error('Please provide vuex store.');
