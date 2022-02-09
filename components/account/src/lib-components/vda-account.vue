@@ -139,9 +139,9 @@ export default defineComponent({
           contextName: this.contextName,
           logo: this.logo,
         });
-        this.profile = this.$VeridaHelper.profile;
-        this.profile.avatar = this.$VeridaHelper.profile.avatar.uri;
-        this.profile.did = this.$VeridaHelper.did;
+        // this.profile = this.$VeridaHelper.profile;
+        // this.profile.avatar = this.$VeridaHelper.profile.avatar.uri;
+        // this.profile.did = this.$VeridaHelper.did;
         if (this.onSuccess) {
           this.onSuccess(this.$VeridaHelper.context);
         }
@@ -169,8 +169,10 @@ export default defineComponent({
     },
   },
   created() {
-    this.$VeridaHelper.on("profileChanged", (profile) => {
-      this.profile = profile;
+    this.$VeridaHelper.on("profileChanged", () => {
+      this.profile = this.$VeridaHelper.profile;
+      this.profile.avatar = this.$VeridaHelper.profile.avatar.uri;
+      this.profile.did = this.$VeridaHelper.did;
     });
   },
 });

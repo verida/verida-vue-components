@@ -28,6 +28,9 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "VdaLogin",
+  components: {
+    PulseLoader,
+  },
   props: {
     styles: {
       type: String,
@@ -58,9 +61,7 @@ export default defineComponent({
       required: false,
     },
   },
-  components: {
-    PulseLoader,
-  },
+
   data() {
     return {
       isLoading: false,

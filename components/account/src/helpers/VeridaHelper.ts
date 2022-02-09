@@ -84,7 +84,7 @@ class VeridaHelpers extends EventEmitter {
     const cb = async () => {
       const data = await profile.getMany();
       this.profile = data;
-      this.saveProfileToLocalStorage(this.profile, this.contextName)
+      this.saveProfileToLocalStorage(data, this.contextName)
       this.emit("profileChanged", this.profile);
     };
     profile.listen(cb);
