@@ -27,7 +27,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "Connect",
+  name: "VdaLogin",
   props: {
     styles: {
       type: String,

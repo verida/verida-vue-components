@@ -72,7 +72,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import VeridaHelper from "../helpers/VeridaHelper";
 
 export default defineComponent({
-  name: "UserMenu",
+  name: "VdaAccount",
   components: { PulseLoader },
   data() {
     return {
@@ -101,7 +101,11 @@ export default defineComponent({
       required: true,
     },
     onError: {
-      type: String,
+      type: Function,
+      required: false,
+    },
+    onSuccess: {
+      type: Function,
       required: false,
     },
   },
@@ -138,7 +142,9 @@ export default defineComponent({
         this.profile = this.$VeridaHelper.profile;
         this.profile.avatar = this.$VeridaHelper.profile.avatar.uri;
         this.profile.did = this.$VeridaHelper.did;
-        this.onSuccess(this.$VeridaHelper.context);
+        if (this.onSuccess) {
+          this.onSuccess(this.$VeridaHelper.context);
+        }
       } catch (error) {
         this.handleError(error);
       } finally {
@@ -165,8 +171,6 @@ export default defineComponent({
   created() {
     this.$VeridaHelper.on("profileChanged", (profile) => {
       this.profile = profile;
-      this.profile.avatar = profile.avatar.uri;
-      this.profile.did = this.$VeridaHelper.did;
     });
   },
 });
