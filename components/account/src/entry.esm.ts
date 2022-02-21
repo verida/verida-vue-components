@@ -3,17 +3,19 @@ import { App, Plugin } from 'vue';
 // Import vue components
 import * as components from '@/lib-components/index';
 import VeridaHelper from './helpers/VeridaHelper';
-import module from './module/module';
-import VueClipboard from 'vue-clipboard2'
+import VueClipboard from 'vue-clipboard2';
+import VueLoading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 
 
-const install: Exclude<Plugin['install'], undefined> = function installAccount(app: App, options: any) {
-  if (!options.store) {
-    throw new Error('Please provide vuex store.');
-  }
-  // Register toasts vuex module 
-  options.store.registerModule('vdaClient', module);
+const install: Exclude<Plugin['install'], undefined> = function installAccount(app: App) {
+
+  app.config.globalProperties.$VeridaHelper = VeridaHelper
+
+  // Vue spinner globally 
+
+  app.use(VueLoading);
 
   // Register Vue copy to clip board 
 
@@ -24,15 +26,9 @@ const install: Exclude<Plugin['install'], undefined> = function installAccount(a
   Object.entries(components).forEach(([componentName, component]) => {
     app.component(componentName, component);
   });
-  app.config.globalProperties.$VeridaHelper = VeridaHelper
-  app.config.globalProperties.$vdaClient = {
-    initUser: (args: any) => {
-      options.store.dispatch('initUser', args);
-    }
-  }
+
 };
 
-// Create module definition for Vue.use()
 export default install;
 
 // To allow individual component use, export components

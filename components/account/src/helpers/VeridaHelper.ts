@@ -1,4 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+global.TextEncoder = require("util").TextEncoder;
+global.TextDecoder = require("util").TextDecoder;
+
 import { EnvironmentType, Network } from "@verida/client-ts";
 import { EventEmitter } from "events";
 import store from "store";
@@ -78,7 +82,7 @@ class VeridaHelpers extends EventEmitter {
     this.emit("connected", this.connected);
   }
 
-  private async initProfile(): Promise<void> {
+  public async initProfile(): Promise<void> {
     const client = await this.context.getClient();
     const profile = await client.openPublicProfile(this.did, VUE_APP_VAULT_CONTEXT_NAME);
     const cb = async () => {

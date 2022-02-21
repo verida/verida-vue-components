@@ -1,13 +1,9 @@
 
 <template>
   <div class="login-container">
-    <div class="loader" v-if="isLoading">
-      <pulse-loader :loading="isLoading" />
-    </div>
+    <div class="loader" v-if="isLoading"></div>
     <div class="connect" v-else>
-      <div class="loader" v-if="isLoading">
-        <pulse-loader :loading="isLoading" />
-      </div>
+      <div class="loader" v-if="isLoading"></div>
       <img src="https://assets.verida.io/verida_logo.svg" alt="verida-btn" />
       <h3>{{ loginText || "Verida SSO Login" }}</h3>
       <p>Use the button below to connect with Verida Vault</p>
@@ -21,16 +17,12 @@
   </div>
 </template>
 
-<script lang="ts">
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+<script>
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "VdaLogin",
-  components: {
-    PulseLoader,
-  },
+  components: {},
   props: {
     styles: {
       type: String,
@@ -71,24 +63,32 @@ export default defineComponent({
   methods: {
     async connect() {
       this.isLoading = true;
+      let loader = this.$loading.show({
+        // isFullPage: false,
+        onCancel: this.onCancel,
+        // canCancel: true,
+      });
       try {
         if (!this.contextName) {
           return (this.error = "Context Name is required");
         }
-        //@ts-ignore
+
         await this.$VeridaHelper.connect({
           contextName: this.contextName,
           logo: this.logo,
         });
-        //@ts-ignore
         this.onSuccess(this.$VeridaHelper.context);
       } catch (error) {
         this.handleError(error);
       } finally {
         this.isLoading = false;
+        loader.hide();
       }
     },
-    handleError(error: any) {
+    onCancel() {
+      this.isLoading = false;
+    },
+    handleError(error) {
       this.error = error;
       if (this.onError) {
         this.onError(this.error);
