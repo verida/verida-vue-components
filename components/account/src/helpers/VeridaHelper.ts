@@ -1,8 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-global.TextEncoder = require("util").TextEncoder;
-global.TextDecoder = require("util").TextDecoder;
-
 import { EnvironmentType, Network } from "@verida/client-ts";
 import { EventEmitter } from "events";
 import store from "store";
@@ -116,8 +112,7 @@ class VeridaHelpers extends EventEmitter {
     }
     this.did = "";
     store.remove(this.contextName as string)
-    store.remove(CONTEXT_NAME_IN_LOCAL_STORAGE)
-    this.emit("profileChanged", this.profile);
+    store.remove(CONTEXT_NAME_IN_LOCAL_STORAGE);
   }
 }
 
