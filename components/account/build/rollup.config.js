@@ -78,7 +78,8 @@ const external = [
   '@verida/client-ts',
   'events',
   'store',
-  '@/assets/images/avatar.svg'
+  '@/assets/images/avatar.svg',
+  'vue-clipboard2',
 ];
 
 // UMD/IIFE shared settings: output.globals

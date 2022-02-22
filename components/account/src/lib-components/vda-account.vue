@@ -62,22 +62,29 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 import store from "store";
 import VeridaHelper from "../helpers/VeridaHelper";
 
-export default defineComponent({
+interface Data {
+  profile: any;
+  error: any;
+  isOpened: boolean;
+  connected: boolean;
+  loading: boolean;
+}
+
+export default /*#__PURE__*/ defineComponent({
   name: "VdaAccount",
   components: {},
-  data() {
+  data(): Data {
     return {
       isOpened: false,
       connected: false,
       profile: {},
       loading: false,
       error: null,
-      func: {},
     };
   },
   props: {
@@ -97,6 +104,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    logo: {
+      type: String,
+      required: true,
+    },
     onError: {
       type: Function,
       required: false,
@@ -110,14 +121,17 @@ export default defineComponent({
     await this.init();
   },
   created() {
-    VeridaHelper.on("profileChanged", (data) => {
-      this.profile = VeridaHelper.profile;
-      this.profile.avatar = VeridaHelper.profile.avatar.uri;
+    VeridaHelper.on("profileChanged", () => {
+      this.profile = this.getProfile();
       this.profile.did = VeridaHelper.did;
+      if (this.profile.avatar && this.profile.avatar.uri) {
+        this.profile.avatar = this.profile.avatar.uri;
+      }
     });
   },
   methods: {
-    copyToClipBoard(value) {
+    copyToClipBoard(value: string) {
+      //@ts-ignore
       this.$copyText(value);
     },
     toggleDropdown() {
@@ -126,7 +140,7 @@ export default defineComponent({
     async disconnect() {
       await this.logout();
     },
-    truncateDID(did) {
+    truncateDID(did: string) {
       return did && did.slice(0, 13);
     },
     async login() {
@@ -149,19 +163,23 @@ export default defineComponent({
         this.loading = false;
       }
     },
-    handleError(error) {
-      this.error = JSON.stringify(error);
-      this.onError(this.error);
+    handleError(error: any) {
+      this.error = error.toString();
+      if (this.onError) {
+        this.onError(this.error);
+      }
     },
     async logout() {
       await VeridaHelper.logout();
       this.connected = false;
       this.onLogout();
     },
+    getProfile() {
+      return store.get(this.contextName);
+    },
     async init() {
-      const profileFromStore = store.get(this.contextName);
-      if (profileFromStore) {
-        this.profile = profileFromStore;
+      if (this.getProfile()) {
+        this.profile = this.getProfile();
         await this.login();
       }
     },
