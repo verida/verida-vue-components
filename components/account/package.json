@@ -1,6 +1,6 @@
 {
-	"name": "test-vue-account",
-	"version": "0.1.1",
+	"name": "@verida/vue-account",
+	"version": "0.1.15",
 	"description": "",
 	"private": false,
 	"license": "ISC",
