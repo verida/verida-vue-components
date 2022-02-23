@@ -2,12 +2,16 @@
 <template>
   <div class="login-container">
     <div class="loader" v-if="isLoading">
-      <pulse-loader :loading="isLoading" />
+      <div class="loader1">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
     <div class="connect" v-else>
-      <div class="loader" v-if="isLoading">
-        <pulse-loader :loading="isLoading" />
-      </div>
+      <div class="loader" v-if="isLoading"></div>
       <img src="https://assets.verida.io/verida_logo.svg" alt="verida-btn" />
       <h3>{{ loginText || "Verida SSO Login" }}</h3>
       <p>Use the button below to connect with Verida Vault</p>
@@ -22,12 +26,12 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { defineComponent } from "vue";
+import VeridaHelper from "../helpers/VeridaHelper";
 
-export default defineComponent({
-  name: "Connect",
+export default /*#__PURE__*/ defineComponent({
+  name: "VdaLogin",
+  components: {},
   props: {
     styles: {
       type: String,
@@ -58,9 +62,7 @@ export default defineComponent({
       required: false,
     },
   },
-  components: {
-    PulseLoader,
-  },
+
   data() {
     return {
       isLoading: false,
@@ -74,18 +76,19 @@ export default defineComponent({
         if (!this.contextName) {
           return (this.error = "Context Name is required");
         }
-        //@ts-ignore
-        await this.$VeridaHelper.connect({
+        await VeridaHelper.connect({
           contextName: this.contextName,
           logo: this.logo,
         });
-        //@ts-ignore
-        this.onSuccess(this.$VeridaHelper.context);
+        this.onSuccess(VeridaHelper.context);
       } catch (error) {
         this.handleError(error);
       } finally {
         this.isLoading = false;
       }
+    },
+    onCancel() {
+      this.isLoading = false;
     },
     handleError(error: any) {
       this.error = error;
@@ -124,6 +127,8 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem 0;
+  height: 20rem;
 }
 
 .connect > * {
@@ -148,8 +153,63 @@ export default defineComponent({
   padding: 1rem 0;
   height: 20rem;
 }
-.loader {
-  padding: 1rem 0;
-  height: 20rem;
+
+.loader1 {
+  display: inline-block;
+  font-size: 0px;
+  padding: 0px;
+}
+.loader1 span {
+  vertical-align: middle;
+  border-radius: 100%;
+
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 3px 2px;
+  -webkit-animation: loader1 0.8s linear infinite alternate;
+  animation: loader1 0.8s linear infinite alternate;
+}
+.loader1 span:nth-child(1) {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+  background: rgba(0, 0, 0, 0.6);
+}
+.loader1 span:nth-child(2) {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+  background: rgba(22, 13, 14, 0.8);
+}
+.loader1 span:nth-child(3) {
+  -webkit-animation-delay: -0.26666s;
+  animation-delay: -0.26666s;
+  background: rgb(14, 1, 2);
+}
+.loader1 span:nth-child(4) {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+  background: rgba(27, 4, 6, 0.8);
+}
+.loader1 span:nth-child(5) {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+@keyframes loader1 {
+  from {
+    transform: scale(0, 0);
+  }
+  to {
+    transform: scale(1, 1);
+  }
+}
+@-webkit-keyframes loader1 {
+  from {
+    -webkit-transform: scale(0, 0);
+  }
+  to {
+    -webkit-transform: scale(1, 1);
+  }
 }
 </style>

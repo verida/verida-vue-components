@@ -1,10 +1,6 @@
 <template>
   <div class="user-menu">
-    <pulse-loader
-      v-if="loading"
-      :loading="loading"
-      :color="loaderIconColor || `#000`"
-    />
+    <div class="loading" v-if="loading">Loading....</div>
     <div v-else-if="profile.name" class="user-menu-widget" :style="styles">
       <div class="m-dropdown">
         <span>{{ profile.name }}</span>
@@ -62,25 +58,33 @@
         src="https://s3.us-west-2.amazonaws.com/assets.verida.io/arrow.svg"
       />
     </button>
+    <div v-if="error" class="error">{{ error }}</div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 import store from "store";
-import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import VeridaHelper from "../helpers/VeridaHelper";
 
-export default defineComponent({
-  name: "UserMenu",
-  components: { PulseLoader },
-  data() {
+interface Data {
+  profile: any;
+  error: any;
+  isOpened: boolean;
+  connected: boolean;
+  loading: boolean;
+}
+
+export default /*#__PURE__*/ defineComponent({
+  name: "VdaAccount",
+  components: {},
+  data(): Data {
     return {
       isOpened: false,
       connected: false,
       profile: {},
       loading: false,
-      error: {},
+      error: null,
     };
   },
   props: {
@@ -100,20 +104,35 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    onError: {
+    logo: {
       type: String,
+      required: true,
+    },
+    onError: {
+      type: Function,
+      required: false,
+    },
+    onSuccess: {
+      type: Function,
       required: false,
     },
   },
   async beforeMount() {
     await this.init();
   },
+  created() {
+    VeridaHelper.on("profileChanged", () => {
+      this.profile = this.getProfile();
+      this.profile.did = VeridaHelper.did;
+      if (this.profile.avatar && this.profile.avatar.uri) {
+        this.profile.avatar = this.profile.avatar.uri;
+      }
+    });
+  },
   methods: {
-    copyToClipBoard(value) {
-      this.$copyText(value).then(
-        function (e) {},
-        function (e) {}
-      );
+    copyToClipBoard(value: string) {
+      //@ts-ignore
+      this.$copyText(value);
     },
     toggleDropdown() {
       this.isOpened = !this.isOpened;
@@ -121,7 +140,7 @@ export default defineComponent({
     async disconnect() {
       await this.logout();
     },
-    truncateDID(did) {
+    truncateDID(did: string) {
       return did && did.slice(0, 13);
     },
     async login() {
@@ -131,49 +150,45 @@ export default defineComponent({
           return (this.error = "Context Name is required");
         }
         this.connected = true;
-        await this.$VeridaHelper.connect({
+        await VeridaHelper.connect({
           contextName: this.contextName,
           logo: this.logo,
         });
-        this.profile = this.$VeridaHelper.profile;
-        this.profile.avatar = this.$VeridaHelper.profile.avatar.uri;
-        this.profile.did = this.$VeridaHelper.did;
-        this.onSuccess(this.$VeridaHelper.context);
+        if (this.onSuccess) {
+          this.onSuccess(VeridaHelper.context);
+        }
       } catch (error) {
         this.handleError(error);
       } finally {
         this.loading = false;
       }
     },
-    handleError(error) {
-      this.error = error;
-      this.onError(this.error);
+    handleError(error: any) {
+      this.error = error.toString();
+      if (this.onError) {
+        this.onError(this.error);
+      }
     },
     async logout() {
       await VeridaHelper.logout();
       this.connected = false;
       this.onLogout();
     },
+    getProfile() {
+      return store.get(this.contextName);
+    },
     async init() {
-      const profileFromStore = store.get(this.contextName);
-      if (profileFromStore) {
-        this.profile = profileFromStore;
+      if (this.getProfile()) {
+        this.profile = this.getProfile();
         await this.login();
       }
     },
-  },
-  created() {
-    this.$VeridaHelper.on("profileChanged", (profile) => {
-      this.profile = profile;
-      this.profile.avatar = profile.avatar.uri;
-      this.profile.did = this.$VeridaHelper.did;
-    });
   },
 });
 </script>
 <style  scoped>
 .user-menu {
-  font-family: "Sora", sans-serif;
+  font-family: "Sora";
   display: flex;
   justify-content: center;
   align-items: center;

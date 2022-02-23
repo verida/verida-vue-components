@@ -78,15 +78,13 @@ class VeridaHelpers extends EventEmitter {
     this.emit("connected", this.connected);
   }
 
-  private async initProfile(): Promise<void> {
+  public async initProfile(): Promise<void> {
     const client = await this.context.getClient();
     const profile = await client.openPublicProfile(this.did, VUE_APP_VAULT_CONTEXT_NAME);
     const cb = async () => {
       const data = await profile.getMany();
       this.profile = data;
-
-      this.profile.avatar = data.avatar && data.avatar.uri
-      this.saveProfileToLocalStorage(this.profile, this.contextName)
+      this.saveProfileToLocalStorage(data, this.contextName)
       this.emit("profileChanged", this.profile);
     };
     profile.listen(cb);
@@ -114,8 +112,7 @@ class VeridaHelpers extends EventEmitter {
     }
     this.did = "";
     store.remove(this.contextName as string)
-    store.remove(CONTEXT_NAME_IN_LOCAL_STORAGE)
-    this.emit("profileChanged", this.profile);
+    store.remove(CONTEXT_NAME_IN_LOCAL_STORAGE);
   }
 }
 

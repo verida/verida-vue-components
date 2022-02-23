@@ -2,10 +2,9 @@
 
 version: 2
 updates:
-
   # Maintain dependencies for npm
-  - package-ecosystem: "npm"
-    directory: "/account-component"
+  - package-ecosystem: 'npm'
+    directory: '/account-component'
     schedule:
-      interval: "weekly"
-      day: "tuesday"
+      interval: 'weekly'
+      day: 'tuesday'
