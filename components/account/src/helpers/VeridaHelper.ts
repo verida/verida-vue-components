@@ -12,8 +12,6 @@ const VUE_APP_VAULT_CONTEXT_NAME = "Verida: Vault";
 
 const CONTEXT_NAME_IN_LOCAL_STORAGE = "AppContext";
 
-const VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER =
-  "https://db.testnet.verida.io:5002/";
 
 const VUE_APP_LOGO_URL =
   "https://assets.verida.io/verida_login_request_logo_170x170.png";
@@ -38,19 +36,7 @@ class VeridaHelpers extends EventEmitter {
 
   public async connect({ contextName, logo }: Connect): Promise<void> {
     this.account = new VaultAccount({
-      defaultDatabaseServer: {
-        type: "VeridaDatabase",
-        endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER,
-      },
-      defaultMessageServer: {
-        type: "VeridaMessage",
-        endpointUri: VUE_APP_VERIDA_TESTNET_DEFAULT_SERVER,
-      },
-      vaultConfig: {
-        request: {
-          logoUrl: logo || VUE_APP_LOGO_URL,
-        },
-      },
+      logoUrl: logo || VUE_APP_LOGO_URL,
     });
 
     if (!this.contextName) {
