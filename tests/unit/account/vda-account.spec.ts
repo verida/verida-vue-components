@@ -1,8 +1,3 @@
-declare var global: any
-
-if (typeof TextEncoder === 'undefined') global.TextEncoder = require('text-encoding-shim').TextEncoder
-if (typeof TextDecoder === 'undefined') global.TextDecoder = require('text-encoding-shim').TextDecoder
-
 import { shallowMount } from "@vue/test-utils";
 import VdaAccount from "../../../components/account/src/lib-components/vda-account.vue";
 
