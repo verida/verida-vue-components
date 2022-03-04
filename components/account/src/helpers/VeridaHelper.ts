@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { EnvironmentType, Network } from "@verida/client-ts";
 import { EventEmitter } from "events";
-import store from "store";
 
 import { hasSession, VaultAccount } from "@verida/account-web-vault";
 
@@ -10,7 +9,6 @@ import { Profile, Connect } from "../interface";
 
 const VUE_APP_VAULT_CONTEXT_NAME = "Verida: Vault";
 
-const CONTEXT_NAME_IN_LOCAL_STORAGE = "AppContext";
 
 
 const VUE_APP_LOGO_URL =
@@ -26,7 +24,6 @@ class VeridaHelpers extends EventEmitter {
 
   constructor() {
     super();
-    this.contextName = store.get(CONTEXT_NAME_IN_LOCAL_STORAGE);
     this.profile = {
       avatar: {},
       name: "",
@@ -38,11 +35,6 @@ class VeridaHelpers extends EventEmitter {
     this.account = new VaultAccount({
       logoUrl: logo || VUE_APP_LOGO_URL,
     });
-
-    if (!this.contextName) {
-      this.contextName = contextName;
-      store.set(CONTEXT_NAME_IN_LOCAL_STORAGE, contextName);
-    }
 
     this.context = await Network.connect({
       client: {
@@ -56,8 +48,6 @@ class VeridaHelpers extends EventEmitter {
 
     this.did = await this.account.did();
 
-    await this.initProfile();
-
     if (this.context) {
       this.connected = true;
     }
@@ -69,8 +59,14 @@ class VeridaHelpers extends EventEmitter {
     const profile = await client.openPublicProfile(this.did, VUE_APP_VAULT_CONTEXT_NAME);
     const cb = async () => {
       const data = await profile.getMany();
-      this.profile = data;
-      this.saveProfileToLocalStorage(data, this.contextName)
+      this.profile = {
+        avatar: data.avatar,
+        name: data.name,
+        country: data.country,
+        description: data.description,
+        did: this.did
+
+      };
       this.emit("profileChanged", this.profile);
     };
     profile.listen(cb);
@@ -79,11 +75,6 @@ class VeridaHelpers extends EventEmitter {
 
   autoLogin() {
     return hasSession(this.contextName as string);
-  }
-
-  public saveProfileToLocalStorage(profile: Profile, contextName: string) {
-
-    store.set(contextName, profile);
   }
 
   async logout(): Promise<void> {
@@ -97,8 +88,6 @@ class VeridaHelpers extends EventEmitter {
       country: "",
     }
     this.did = "";
-    store.remove(this.contextName as string)
-    store.remove(CONTEXT_NAME_IN_LOCAL_STORAGE);
   }
 }
 
