@@ -121,9 +121,8 @@ export default /*#__PURE__*/ defineComponent({
     await this.init();
   },
   created() {
-    VeridaHelper.on("profileChanged", () => {
-      this.profile = this.getProfile();
-      this.profile.did = VeridaHelper.did;
+    VeridaHelper.on("profileChanged", (profile) => {
+      this.profile = profile;
       if (this.profile.avatar && this.profile.avatar.uri) {
         this.profile.avatar = this.profile.avatar.uri;
       }
@@ -154,6 +153,7 @@ export default /*#__PURE__*/ defineComponent({
           contextName: this.contextName,
           logo: this.logo,
         });
+        await VeridaHelper.initProfile();
         if (this.onSuccess) {
           this.onSuccess(VeridaHelper.context);
         }
@@ -175,7 +175,7 @@ export default /*#__PURE__*/ defineComponent({
       this.onLogout();
     },
     getProfile() {
-      return store.get(this.contextName);
+      return store.get("_verida_auth_context");
     },
     async init() {
       if (this.getProfile()) {
