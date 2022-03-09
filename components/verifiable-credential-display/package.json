@@ -1,5 +1,5 @@
 {
-	"name": "@verida/vue-verifiable-credential-display",
+	"name": "@verida/vue-credentials-view",
 	"version": "1.0.0",
 	"description": "",
 	"main": "dist/verifiable-credential-display.ssr.js",

@@ -134,6 +134,3 @@ export default defineComponent({
 | logo            | string   | false    | 170x170 png file                                                                                                                            |
 | contextName     | string   | true     | application name e.g `Verida : My APP`                                                                                                      |                                                                                               |
 | loginText     | string   | false     | Login Screen Text                              |                                                                                               |
-
-
-
