@@ -2,6 +2,7 @@
 	"name": "@verida/vue-credentials-view",
 	"version": "1.0.0",
 	"description": "",
+	"license": "ISC",	
 	"main": "dist/verifiable-credential-display.ssr.js",
 	"browser": "dist/verifiable-credential-display.esm.js",
 	"module": "dist/verifiable-credential-display.esm.js",
