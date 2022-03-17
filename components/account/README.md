@@ -1,6 +1,6 @@
 # verida user account component
 
-Open Source Vue Components for Verida 
+Open Source Vue Components for Verida
 
 - This component can be customized to suite your application styles and themes .
 
@@ -12,36 +12,46 @@ NB: This supports vue 3 only
 yarn add  @verida/vue-account3
 
 ```
-The `@verida/vue-account3` component library registration accepts a `vuex` store this enables the `vda-account` and vda-login` component to be accessed across your application and share some global state.
+
+The `@verida/vue-account` component library registration  enables the `vda-account` and vda-login` component to be accessed across your application and share some global state.
 
 main.js
 
 ```js
-
 import { createApp } from 'vue';
 import App from './App.vue';
-import Account from '@verida/vue-account3';
-import { createStore } from "vuex";
+import Account from '@verida/vue-account';
 
 
 const app = createApp(App);
 
-const store = createStore({})
-
-
-app.use(store)
-app.use(Account, { store });
+app.use(Account);
 
 app.mount('#app');
 
 ```
 
-### Using the `vda-login` component:
+- NOTE : You can retrieve the user application `context` from the parameter of the `onSuccess` function passed as a prop .
 
-This component is used to handle SSO (Single Sign on) login it leverages our `@verida/client-ts` and `@verida/account-web-vault` packages under the hood
+This works for both the `vda-login` and `vda-account`
 
+### Using the `vda-login` component
+
+This component is used to handle SSO (Single Sign on) login it leverages our `@verida/client-ts` and `@verida/account-web-vault` packages under the hood.
 
 ```vue
+<template>
+  <div id="app">
+    <vda-login
+      :onError="onError"
+      :onSuccess="onSuccess"
+      :contextName="contextName"
+      :logo="logo"
+      :onLogout="onLogout"
+      :loginText: 'LOGIN_TEXT',
+    />
+  </div>
+</template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -65,26 +75,26 @@ export default defineComponent({
 });
 </script>
 
+```
+
+### Using the `vda-account` component
+
+This component is used to display a logged-in user profile details such as `name` , `did`and  `avatar` this happens after the `vda-login` component has been used for performing and SSO (Single Sign on) Login .
+
+```vue
+
 <template>
   <div id="app">
-    <vda-login
-      :onError="onError"
-      :onSuccess="onSuccess"
-      :contextName="contextName"
+    <vda-account 
       :logo="logo"
-      :onLogout="onLogout"
+      :contextName="contextName"
+      :onLogout="onLogout" 
+      :onError="onError"
+      :onSuccess="onSuccess" 
     />
   </div>
 </template>
 
-```
-
-###  Using the `vda-account` component :
-
-This component is used to display a logged-in user profile details such as `name` , `did`and  `avatar` this happens after the `vda-login` component has been used for performing and SSO (Single Sign on) Login .
-
-
-```vue
 <script lang="ts">
 import { defineComponent } from "vue";
 
@@ -100,15 +110,16 @@ export default defineComponent({
     onLogout() {
       console.log("hello");
     },
+    onSuccess(response: any) {
+      // The response is the application context of the connected user..
+      console.log(response)
+    },
+    onError(error) {
+      console.log("Login Error", error);
+    },
   },
 });
 </script>
-
-<template>
-  <div id="app">
-    <vda-account :logo="logo" :contextName="contextName" :onLogout="onLogout" />
-  </div>
-</template>
 
 ```
 
@@ -123,7 +134,6 @@ export default defineComponent({
 | logo            | string   | false    | 170x170 png file                                                                                                                            |
 | contextName     | string   | true     | application name e.g `Verida : My APP`                                                                                                      |
 | onLogout        | function | true     | a callback function to perform logout action                                                                                                |
-
 
 2. `vda-login`
 
