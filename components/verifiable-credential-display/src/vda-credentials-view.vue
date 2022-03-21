@@ -101,7 +101,7 @@ export default /*#__PURE__*/ defineComponent({
 .vda-vc-content-value {
   font-size: 0.9rem;
   line-height: 150%;
-  text-align: left;
+  text-align: left !important;
   color: #060520;
   display: block;
   margin: 0 0.5rem;

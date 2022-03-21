@@ -1,5 +1,5 @@
 <template>
-  <div class="user-menu">
+  <div class="user-menu" :key="connected">
     <div class="loading" v-if="loading">Loading....</div>
     <div v-else-if="profile.name" class="user-menu-widget" :style="styles">
       <div class="m-dropdown">
@@ -25,7 +25,7 @@
           <div>
             <span>
               <a
-                :href="`http://accounts.verida.io/${profile.did}`"
+                :href="`https://verida.network/did/${profile.did}`"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -64,7 +64,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "store";
 import VeridaHelper from "../helpers/VeridaHelper";
 
 interface Data {
@@ -118,7 +117,9 @@ export default /*#__PURE__*/ defineComponent({
     },
   },
   async beforeMount() {
-    await this.init();
+    VeridaHelper.on("connected", async () => {
+      await this.loadProfile();
+    });
   },
   created() {
     VeridaHelper.on("profileChanged", (profile) => {
@@ -148,12 +149,21 @@ export default /*#__PURE__*/ defineComponent({
         if (!this.contextName) {
           return (this.error = "Context Name is required");
         }
-        this.connected = true;
         await VeridaHelper.connect({
           contextName: this.contextName,
           logo: this.logo,
         });
-        await VeridaHelper.initProfile();
+      } catch (error) {
+        this.handleError(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async loadProfile() {
+      try {
+        this.loading = true;
+        //@ts-ignore
+        await this.$VeridaHelper.initProfile();
         if (this.onSuccess) {
           this.onSuccess(VeridaHelper.context);
         }
@@ -174,12 +184,10 @@ export default /*#__PURE__*/ defineComponent({
       this.connected = false;
       this.onLogout();
     },
-    getProfile() {
-      return store.get("_verida_auth_context");
-    },
     async init() {
-      if (this.getProfile()) {
-        this.profile = this.getProfile();
+      //@ts-ignore
+      const context = await this.$VeridaHelper.context;
+      if (VeridaHelper.hasSession(this.contextName) && !context) {
         await this.login();
       }
     },
