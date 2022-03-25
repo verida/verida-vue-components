@@ -33,7 +33,9 @@ class VeridaHelpers extends EventEmitter {
 
   public async connect({ contextName, logo }: Connect): Promise<void> {
     this.account = new VaultAccount({
-      logoUrl: logo || VUE_APP_LOGO_URL,
+      request: {
+        logoUrl: logo || VUE_APP_LOGO_URL,
+      }
     });
 
     this.context = await Network.connect({
