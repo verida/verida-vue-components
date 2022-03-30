@@ -120,6 +120,7 @@ export default /*#__PURE__*/ defineComponent({
     VeridaHelper.on("connected", async () => {
       await this.loadProfile();
     });
+    await this.init();
   },
   created() {
     VeridaHelper.on("profileChanged", (profile) => {
@@ -162,8 +163,7 @@ export default /*#__PURE__*/ defineComponent({
     async loadProfile() {
       try {
         this.loading = true;
-        //@ts-ignore
-        await this.$VeridaHelper.initProfile();
+        await VeridaHelper.initProfile();
         if (this.onSuccess) {
           this.onSuccess(VeridaHelper.context);
         }
@@ -185,9 +185,7 @@ export default /*#__PURE__*/ defineComponent({
       this.onLogout();
     },
     async init() {
-      //@ts-ignore
-      const context = await this.$VeridaHelper.context;
-      if (VeridaHelper.hasSession(this.contextName) && !context) {
+      if (VeridaHelper.hasSession(this.contextName) && !VeridaHelper.context) {
         await this.login();
       }
     },
