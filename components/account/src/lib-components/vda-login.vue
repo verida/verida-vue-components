@@ -62,12 +62,14 @@ export default /*#__PURE__*/ defineComponent({
       required: false,
     },
   },
-
   data() {
     return {
       isLoading: false,
       error: {},
     };
+  },
+  async beforeMount() {
+    await this.init();
   },
   methods: {
     async connect() {
@@ -94,6 +96,11 @@ export default /*#__PURE__*/ defineComponent({
       this.error = error;
       if (this.onError) {
         this.onError(this.error);
+      }
+    },
+    async init() {
+      if (VeridaHelper.hasSession(this.contextName)) {
+        await this.connect();
       }
     },
   },

@@ -2,13 +2,15 @@
 import { EnvironmentType, Network } from "@verida/client-ts";
 import { EventEmitter } from "events";
 
-import { hasSession, VaultAccount } from "@verida/account-web-vault";
+import { VaultAccount, hasSession } from "@verida/account-web-vault";
 
 import { Profile, Connect } from "../interface";
+import store from "store";
 
 
 const VUE_APP_VAULT_CONTEXT_NAME = "Verida: Vault";
 
+export const VERIDA_SESSION = '_verida_auth_context';
 
 
 const VUE_APP_LOGO_URL =
@@ -20,6 +22,7 @@ class VeridaHelpers extends EventEmitter {
   private account: any;
   public did?: string;
   public connected?: boolean;
+  public vdaAccount?: boolean;
   public contextName?: string | any;
 
   constructor() {
@@ -73,21 +76,44 @@ class VeridaHelpers extends EventEmitter {
     await cb();
   }
 
-  autoLogin() {
-    return hasSession(this.contextName as string);
+  async syncVdaAccount() {
+    this.vdaAccount = true
+  }
+
+  async autoLogin(contextName: string) {
+    await this.connect({
+      contextName
+    })
+  }
+
+  hasSession(contextName: string): boolean {
+    return hasSession(contextName)
   }
 
   async logout(): Promise<void> {
-    await this.context.getAccount().disconnect(this.contextName);
-    this.context = null;
-    this.account = null;
-    this.connected = false;
-    this.profile = {
-      avatar: {},
-      name: "",
-      country: "",
+    const obj = store.get('_verida_auth_context')
+    let ct;
+    Object.keys(obj).map(ls => (
+      ct = ls
+    ))
+
+    console.log(ct);
+
+    if (!this.context && ct) {
+      await this.autoLogin(ct)
     }
-    this.did = "";
+
+    // await this.context.getAccount().disconnect(this.contextName);
+    // this.context = null;
+    // this.account = null;
+    // this.connected = false;
+    // this.profile = {
+    //   avatar: {},
+    //   name: "",
+    //   country: "",
+    // }
+    // this.did = "";
+    // this.vdaAccount = false
   }
 }
 
