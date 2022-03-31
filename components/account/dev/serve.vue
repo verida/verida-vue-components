@@ -13,8 +13,6 @@ export default defineComponent({
   },
   methods: {
     onSuccess(response: any) {
-      //@ts-ignore
-      // this.$vdaClient.initUser(response);
       console.log(response);
     },
     onError() {},
