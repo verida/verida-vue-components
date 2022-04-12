@@ -1,6 +1,6 @@
 {
 	"name": "@verida/vue-credentials-view",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "",
 	"license": "ISC",
 	"main": "dist/verifiable-credential-display.ssr.js",
