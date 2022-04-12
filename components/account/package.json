@@ -24,8 +24,8 @@
 		"postbuild": "rimraf ./dist/types/dev ./dist/types/src/entry.d.ts"
 	},
 	"dependencies": {
-		"@verida/account-web-vault": "^1.1.9",
-		"@verida/client-ts": "^1.1.12",
+		"@verida/account-web-vault": "^1.1.11",
+		"@verida/client-ts": "^1.1.14",
 		"store": "^2.0.12",
 		"vue-clipboard2": "^0.3.3"
 	},
