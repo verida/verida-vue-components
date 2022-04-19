@@ -16,7 +16,7 @@ const VUE_APP_LOGO_URL =
   "https://assets.verida.io/verida_login_request_logo_170x170.png";
 
 class VeridaHelpers extends EventEmitter {
-  public profile: Profile;
+  public profile: Profile | null;
   public context: any;
   private account: any;
   public did?: string;
@@ -91,11 +91,7 @@ class VeridaHelpers extends EventEmitter {
     this.context = null;
     this.account = null;
     this.connected = false;
-    this.profile = {
-      avatar: {},
-      name: "",
-      country: "",
-    }
+    this.profile = null
     this.did = "";
   }
 }
