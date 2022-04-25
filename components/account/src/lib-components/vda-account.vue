@@ -116,6 +116,8 @@ export default /*#__PURE__*/ defineComponent({
   async beforeMount() {
     VeridaHelper.on("connected", async () => {
       await this.loadProfile();
+      // Clear error object after profile loads for case where public_profile DB is not found
+      this.error = "";
     });
     await this.init();
   },
@@ -153,8 +155,6 @@ export default /*#__PURE__*/ defineComponent({
         });
       } catch (error) {
         this.handleError(error);
-      } finally {
-        this.loading = false;
       }
     },
     async loadProfile() {
@@ -171,7 +171,12 @@ export default /*#__PURE__*/ defineComponent({
       }
     },
     handleError(error: any) {
-      this.error = error.toString();
+      if (error.message === "Public database not found: profile_public") {
+        this.profile.name = "unknown";
+        this.error = "unknown";
+      } else {
+        this.error = error.message;
+      }
       if (this.onError) {
         this.onError(this.error);
       }
@@ -179,6 +184,7 @@ export default /*#__PURE__*/ defineComponent({
     async logout() {
       await VeridaHelper.logout();
       this.connected = false;
+      this.profile = {};
       this.onLogout();
     },
     async init() {
