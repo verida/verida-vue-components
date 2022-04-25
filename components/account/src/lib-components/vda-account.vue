@@ -17,7 +17,7 @@
           <img
             v-else
             height="40"
-            src="https://assets.verida.io/assets.verida.io/avatar.svg"
+            src="https://assets.verida.io/avatar.svg"
             alt="user-avatar"
           />
         </div>
@@ -35,7 +35,7 @@
             <img
               height="20"
               @click="copyToClipBoard(profile.did)"
-              src="https://assets.verida.io/assets.verida.io/copy.png"
+              src="https://assets.verida.io/copy.png"
               alt="icon"
               title="Copy to clipboard"
             />
@@ -44,7 +44,7 @@
             <span> Log out </span>
             <img
               height="20"
-              src="https://assets.verida.io/assets.verida.io/logout.svg"
+              src="https://assets.verida.io/logout.svg"
               alt="icon"
             />
           </div>
@@ -53,10 +53,7 @@
     </div>
     <button v-else class="login-section" @click="login">
       <span>Login with Verida</span>
-      <img
-        alt="Vue logo"
-        src="https://assets.verida.io/assets.verida.io/arrow.svg"
-      />
+      <img alt="Vue logo" src="https://assets.verida.io/arrow.svg" />
     </button>
     <div v-if="error" class="error">{{ error }}</div>
   </div>
