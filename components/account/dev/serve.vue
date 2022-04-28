@@ -9,6 +9,18 @@ export default defineComponent({
     return {
       contextName: "Verida: New Account Component",
       logo: "https://assets.verida.io/verida_login_request_logo_170x170.png",
+      navItems: [
+        {
+          title: "Manage Token",
+          img: "https://s3.us-west-2.amazonaws.com/assets.verida.io/copy.png",
+          link: "/",
+        },
+        {
+          title: "Verida Token",
+          img: "https://s3.us-west-2.amazonaws.com/assets.verida.io/avatar.svg",
+          link: "/",
+        },
+      ],
     };
   },
   methods: {
@@ -29,6 +41,7 @@ export default defineComponent({
       :onSuccess="onSuccess"
       :contextName="contextName"
       :onLogout="onLogout"
+      :navItems="navItems"
     />
     <vda-login
       :onError="onError"

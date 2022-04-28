@@ -1,52 +1,71 @@
 <template>
-  <div class="user-menu" :key="connected">
+  <div class="vda-menu" :key="connected">
     <div class="loading" v-if="loading">Loading....</div>
-    <div v-else-if="profile.name" class="user-menu-widget" :style="styles">
-      <div class="m-dropdown">
-        <span>{{ profile.name }}</span>
+    <div v-else-if="profile.name" class="vda-menu-widget" :style="styles">
+      <div class="vda-dropdown">
         <div
+          role="button"
           @click="toggleDropdown"
-          :class="[isOpened ? 'm-dropdown-top-active' : 'm-dropdown-top']"
+          :class="[isOpened ? 'vda-dropdown-top-active' : 'vda-dropdown-top']"
         >
-          <img
-            height="40"
-            v-if="profile.avatar"
-            alt="user-avatar"
-            :src="profile.avatar"
-          />
+          <img v-if="profile.avatar" alt="vda-avatar" :src="profile.avatar" />
           <img
             v-else
-            height="40"
             src="https://s3.us-west-2.amazonaws.com/assets.verida.io/avatar.svg"
-            alt="user-avatar"
+            alt="vda-avatar"
           />
         </div>
-        <div v-show="isOpened" class="m-dropdown-logout">
+        <div class="vda-dropdown-profile">
+          <span>{{ profile.name }}</span>
+          <span>{{ truncateDID(profile.did) }}</span>
+        </div>
+        <div v-show="isOpened" class="vda-dropdown-logout">
           <div>
+            <img
+              role="button"
+              @click="copyToClipBoard(profile.did)"
+              src="https://s3.us-west-2.amazonaws.com/assets.verida.io/copy.png"
+              alt="icon"
+              title="Copy to clipboard"
+            />
+            <span> Copy DID to Clip board </span>
+          </div>
+          <div>
+            <img
+              role="button"
+              src="https://s3.us-west-2.amazonaws.com/assets.verida.io/copy.png"
+              alt="icon"
+              title="Copy to clipboard"
+            />
             <span>
               <a
                 :href="`https://verida.network/did/${profile.did}`"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {{ truncateDID(profile.did) }}...</a
-              >
+                View DID in Account Explorer
+              </a>
             </span>
-            <img
-              height="20"
-              @click="copyToClipBoard(profile.did)"
-              src="https://s3.us-west-2.amazonaws.com/assets.verida.io/copy.png"
-              alt="icon"
-              title="Copy to clipboard"
-            />
           </div>
-          <div @click="disconnect">
-            <span> Log out </span>
+          <div v-for="nav in navItems" :key="nav.title">
+            <img :src="nav.img" :alt="nav.title" :title="nav.title" />
+            <span>
+              <a :href="nav.link" target="_blank" rel="noopener noreferrer">
+                {{ nav.title }}
+              </a>
+            </span>
+          </div>
+          <div
+            role="button"
+            class="vda-dropdown-logout-button"
+            aria-label="button"
+            @click="disconnect"
+          >
             <img
-              height="20"
               src="https://s3.us-west-2.amazonaws.com/assets.verida.io/logout.svg"
               alt="icon"
             />
+            <span> Log out </span>
           </div>
         </div>
       </div>
@@ -81,7 +100,11 @@ export default /*#__PURE__*/ defineComponent({
     return {
       isOpened: false,
       connected: false,
-      profile: {},
+      profile: {
+        name: "2yime",
+        country: "American Samoa",
+        did: "did:vda:0x476Fa00518971FCC0b7B342F4b43e5f9892Cbbf8",
+      },
       loading: false,
       error: null,
     };
@@ -90,6 +113,11 @@ export default /*#__PURE__*/ defineComponent({
     styles: {
       type: String,
       required: false,
+    },
+    navItems: {
+      type: Array,
+      required: false,
+      default: [],
     },
     loaderIconColor: {
       type: String,
@@ -122,7 +150,7 @@ export default /*#__PURE__*/ defineComponent({
       // Clear error object after profile loads for case where public_profile DB is not found
       this.error = "";
     });
-    await this.init();
+    // await this.init();
   },
   created() {
     VeridaHelper.on("profileChanged", (profile) => {
@@ -130,6 +158,8 @@ export default /*#__PURE__*/ defineComponent({
       if (this.profile.avatar && this.profile.avatar.uri) {
         this.profile.avatar = this.profile.avatar.uri;
       }
+
+      console.log(this.profile);
     });
   },
   methods: {
@@ -199,7 +229,10 @@ export default /*#__PURE__*/ defineComponent({
 });
 </script>
 <style  scoped>
-.user-menu {
+a {
+  text-decoration: none;
+}
+.vda-menu {
   font-family: "Sora";
   display: flex;
   justify-content: center;
@@ -220,7 +253,7 @@ export default /*#__PURE__*/ defineComponent({
   margin: 0 0.4rem;
 }
 
-.user-menu-widget {
+.vda-menu-widget {
   position: relative;
   font-family: sans-serif;
   display: flex;
@@ -228,28 +261,52 @@ export default /*#__PURE__*/ defineComponent({
   align-items: center;
 }
 
-.user-menu-widget-title {
+.vda-menu-widget-title {
   margin: 0 1.5rem;
   padding: auto;
 }
 
-.m-dropdown {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.vda-dropdown-profile {
+  margin: 0 0 0 1.4rem;
+}
+
+.vda-dropdown-profile span:nth-child(1) {
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  color: #000000;
+}
+
+.vda-dropdown-profile span:nth-child(2) {
+  display: block;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  text-align: center;
+  color: #808080;
+}
+
+.vda-dropdown {
+  display: flex;
   position: relative;
   z-index: 2;
 }
 
-.m-dropdown span {
+.vda-dropdown img {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.vda-dropdown span {
   margin: 0.7rem 1rem 0 0;
 }
 
-.m-dropdown span a {
+.vda-dropdown span a {
   color: black;
   margin-left: -0.2rem;
 }
 
-.m-dropdown-top {
+.vda-dropdown-top {
   background: #3333;
   height: 2.5rem;
   width: 2.5rem;
@@ -260,44 +317,49 @@ export default /*#__PURE__*/ defineComponent({
   cursor: pointer;
 }
 
-.m-dropdown-top img {
+.vda-dropdown-top img {
   border-radius: 50%;
 }
 
-.m-dropdown-top-active img {
+.vda-dropdown-top-active img {
   border-radius: 50%;
 }
 
-.m-dropdown-logout {
+.vda-dropdown-logout {
   position: absolute;
   top: 3.6rem;
   right: 0;
+  width: 20rem;
   background: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0px 3px 4px #bbbbbb;
+  border: 1px solid #ededed;
+  box-shadow: 0px 24px 40px rgba(6, 5, 32, 0.08);
+  border-radius: 8px;
 }
 
-.m-dropdown-logout div {
+.vda-dropdown-logout div {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   text-align: center;
-  width: 11rem;
-  padding: 0.7rem 1rem;
-  border-top: 1px solid rgba(12, 11, 11, 0.04);
-  border-left: none;
-  border-bottom: none;
-  border-right: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background: transparent;
+  padding: 9px 16px;
+  height: 40px;
 }
 
-.m-dropdown-logout div:hover {
-  background: rgba(12, 11, 11, 0.04);
+.vda-dropdown-logout div img {
+  height: 1.3rem;
+  width: 1.3rem;
+  margin: 0 1.2rem -0.5rem 0;
 }
-.m-dropdown-logout div img:hover {
-  background: rgb(163, 163, 163);
-  border-radius: 50%;
+
+.vda-dropdown-logout div:hover {
+  background: rgba(12, 11, 11, 0.04);
+  cursor: pointer;
+}
+
+.vda-dropdown-logout div:nth-child(2) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.vda-dropdown-logout-button {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 </style>
