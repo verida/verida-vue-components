@@ -26,7 +26,6 @@ export default defineComponent({
     <vda-account
       :logo="logo"
       :onError="onError"
-      :onSuccess="onSuccess"
       :contextName="contextName"
       :onLogout="onLogout"
     />

@@ -1,5 +1,5 @@
 <template>
-  <div class="user-menu" :key="connected">
+  <div class="user-menu">
     <div class="loading" v-if="loading">Loading....</div>
     <div v-else-if="profile.name" class="user-menu-widget" :style="styles">
       <div class="m-dropdown">
@@ -70,7 +70,6 @@ interface Data {
   profile: any;
   error: any;
   isOpened: boolean;
-  connected: boolean;
   loading: boolean;
 }
 
@@ -80,7 +79,6 @@ export default /*#__PURE__*/ defineComponent({
   data(): Data {
     return {
       isOpened: false,
-      connected: false,
       profile: {},
       loading: false,
       error: null,
@@ -88,10 +86,6 @@ export default /*#__PURE__*/ defineComponent({
   },
   props: {
     styles: {
-      type: String,
-      required: false,
-    },
-    loaderIconColor: {
       type: String,
       required: false,
     },
@@ -111,26 +105,12 @@ export default /*#__PURE__*/ defineComponent({
       type: Function,
       required: false,
     },
-    onSuccess: {
-      type: Function,
-      required: false,
-    },
   },
-  async beforeMount() {
-    VeridaHelper.on("connected", async () => {
-      await this.loadProfile();
-      // Clear error object after profile loads for case where public_profile DB is not found
-      this.error = "";
+  async created() {
+    VeridaHelper.on("profileChanged", (profileData) => {
+      this.profile = profileData;
     });
     await this.init();
-  },
-  created() {
-    VeridaHelper.on("profileChanged", (profile) => {
-      this.profile = profile;
-      if (this.profile.avatar && this.profile.avatar.uri) {
-        this.profile.avatar = this.profile.avatar.uri;
-      }
-    });
   },
   methods: {
     copyToClipBoard(value: string) {
@@ -146,7 +126,7 @@ export default /*#__PURE__*/ defineComponent({
     truncateDID(did: string) {
       return did && did.slice(0, 13);
     },
-    async login() {
+    async connect() {
       this.loading = true;
       try {
         if (!this.contextName) {
@@ -156,17 +136,14 @@ export default /*#__PURE__*/ defineComponent({
           contextName: this.contextName,
           logo: this.logo,
         });
-      } catch (error) {
-        this.handleError(error);
-      }
-    },
-    async loadProfile() {
-      try {
-        this.loading = true;
-        await VeridaHelper.initProfile();
-        if (this.onSuccess) {
-          this.onSuccess(VeridaHelper.context);
-        }
+
+        const profileData = await VeridaHelper.getProfile();
+
+        // initialize profile event listener
+
+        VeridaHelper.initProfileEvent();
+
+        this.profile = profileData;
       } catch (error) {
         this.handleError(error);
       } finally {
@@ -186,13 +163,12 @@ export default /*#__PURE__*/ defineComponent({
     },
     async logout() {
       await VeridaHelper.logout();
-      this.connected = false;
       this.profile = {};
       this.onLogout();
     },
     async init() {
       if (VeridaHelper.hasSession(this.contextName) && !VeridaHelper.context) {
-        await this.login();
+        await this.connect();
       }
     },
   },
