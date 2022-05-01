@@ -17,7 +17,7 @@
           <img
             v-else
             height="40"
-            src="https://s3.us-west-2.amazonaws.com/assets.verida.io/avatar.svg"
+            src="https://assets.verida.io/avatar.svg"
             alt="user-avatar"
           />
         </div>
@@ -35,28 +35,25 @@
             <img
               height="20"
               @click="copyToClipBoard(profile.did)"
-              src="https://s3.us-west-2.amazonaws.com/assets.verida.io/copy.png"
+              src="https://assets.verida.io/copy.png"
               alt="icon"
               title="Copy to clipboard"
             />
           </div>
-          <div @click="disconnect">
+          <div role="button" @click="disconnect">
             <span> Log out </span>
             <img
               height="20"
-              src="https://s3.us-west-2.amazonaws.com/assets.verida.io/logout.svg"
+              src="https://assets.verida.io/logout.svg"
               alt="icon"
             />
           </div>
         </div>
       </div>
     </div>
-    <button v-else class="login-section" @click="login">
+    <button v-else class="login-section" @click="connect">
       <span>Login with Verida</span>
-      <img
-        alt="Vue logo"
-        src="https://s3.us-west-2.amazonaws.com/assets.verida.io/arrow.svg"
-      />
+      <img alt="Vue logo" src="https://assets.verida.io/arrow.svg" />
     </button>
     <div v-if="error" class="error">{{ error }}</div>
   </div>
@@ -154,9 +151,8 @@ export default /*#__PURE__*/ defineComponent({
       if (error.message === "Public database not found: profile_public") {
         this.profile.name = "unknown";
         this.error = "unknown";
-      } else {
-        this.error = error.message;
       }
+
       if (this.onError) {
         this.onError(this.error);
       }

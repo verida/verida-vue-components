@@ -53,8 +53,8 @@ class VeridaHelpers extends EventEmitter {
 
     if (this.context) {
       this.connected = true;
+      this.emit("connected", this.context);
     }
-    this.emit("connected", this.context);
   }
 
 
