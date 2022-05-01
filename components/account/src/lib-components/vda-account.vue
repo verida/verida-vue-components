@@ -11,8 +11,9 @@
           <img v-if="profile.avatar" alt="vda-avatar" :src="profile.avatar" />
           <img
             v-else
-            src="https://s3.us-west-2.amazonaws.com/assets.verida.io/avatar.svg"
-            alt="vda-avatar"
+            height="40"
+            src="https://assets.verida.io/avatar.svg"
+            alt="user-avatar"
           />
         </div>
         <div class="vda-dropdown-profile">
@@ -62,7 +63,8 @@
             @click="disconnect"
           >
             <img
-              src="https://s3.us-west-2.amazonaws.com/assets.verida.io/logout.svg"
+              height="20"
+              src="https://assets.verida.io/logout.svg"
               alt="icon"
             />
             <span> Log out </span>
@@ -72,10 +74,7 @@
     </div>
     <button v-else class="login-section" @click="login">
       <span>Login with Verida</span>
-      <img
-        alt="Vue logo"
-        src="https://s3.us-west-2.amazonaws.com/assets.verida.io/arrow.svg"
-      />
+      <img alt="Vue logo" src="https://assets.verida.io/arrow.svg" />
     </button>
     <div v-if="error" class="error">{{ error }}</div>
   </div>
