@@ -12,12 +12,12 @@ export default defineComponent({
       navItems: [
         {
           title: "Manage Token",
-          img: "https://s3.us-west-2.amazonaws.com/assets.verida.io/copy.png",
+          img: "https://assets.verida.io/icon_coin.svg",
           link: "/",
         },
         {
           title: "Verida Token",
-          img: "https://s3.us-west-2.amazonaws.com/assets.verida.io/avatar.svg",
+          img: "https://assets.verida.io/icon_star.svg",
           link: "/",
         },
       ],

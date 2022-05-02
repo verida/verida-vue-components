@@ -25,7 +25,7 @@
             <img
               role="button"
               @click="copyToClipBoard(profile.did)"
-              src="https://s3.us-west-2.amazonaws.com/assets.verida.io/copy.png"
+              src="https://s3.us-west-2.amazonaws.com/assets.verida.io/icon_duplicate.svg"
               alt="icon"
               title="Copy to clipboard"
             />
@@ -34,7 +34,7 @@
           <div>
             <img
               role="button"
-              src="https://s3.us-west-2.amazonaws.com/assets.verida.io/copy.png"
+              src="https://assets.verida.io/icon_search.svg"
               alt="icon"
               title="Copy to clipboard"
             />
@@ -64,7 +64,7 @@
           >
             <img
               height="20"
-              src="https://assets.verida.io/logout.svg"
+              src="https://assets.verida.io/icon_logout.svg"
               alt="icon"
             />
             <span> Log out </span>
