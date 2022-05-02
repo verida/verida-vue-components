@@ -1,6 +1,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-empty-interface */
+import { Context } from "@verida/client-ts";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -11,6 +12,13 @@ export default defineComponent({
       logo: "https://assets.verida.io/verida_login_request_logo_170x170.png",
     };
   },
+  async created() {
+    //@ts-ignore
+    this.$VeridaHelper.on("connected", (context: Context) => {
+      console.log("App context", context);
+    });
+  },
+
   methods: {
     onSuccess(response: any) {
       console.log(response);
@@ -26,7 +34,6 @@ export default defineComponent({
     <vda-account
       :logo="logo"
       :onError="onError"
-      :onSuccess="onSuccess"
       :contextName="contextName"
       :onLogout="onLogout"
     />

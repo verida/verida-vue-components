@@ -79,7 +79,11 @@ export default defineComponent({
 
 ### Using the `vda-account` component
 
-This component is used to display a logged-in user profile details such as `name` , `did`and  `avatar` this happens after the `vda-login` component has been used for performing and SSO (Single Sign on) Login .
+This component is used to display a logged-in user profile details such as `name` , `did`and  `avatar` this happens after the `vda-login` component has been used for performing and SSO (Single Sign on) Login.
+
+- You can listen for an event `connected` after a successful SSO Login , see example code below  
+
+- Example code :
 
 ```vue
 
@@ -90,7 +94,6 @@ This component is used to display a logged-in user profile details such as `name
       :contextName="contextName"
       :onLogout="onLogout" 
       :onError="onError"
-      :onSuccess="onSuccess" 
     />
   </div>
 </template>
@@ -105,6 +108,11 @@ export default defineComponent({
       contextName: "Verida: Account Component",
       logo: "https://assets.verida.io/verida_login_request_logo_170x170.png",
     };
+  },
+  async created() {
+    this.$VeridaHelper.on("connected", (context) => {
+        console.log("App context", context);
+    });
   },
   methods: {
     onLogout() {
@@ -139,7 +147,6 @@ export default defineComponent({
 
 | Props           | Type     | Required | Description                                                                                                                                 |
 | --------------- | -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| onSuccess       | function | true     | a callback function that will return the application `context` will be passed as an argument to this function after a successful SSO login. |
 | onError         | function | true     | a callback function that log errors                                                                                                                                                                                                                    |
 | logo            | string   | false    | 170x170 png file                                                                                                                            |
 | contextName     | string   | true     | application name e.g `Verida : My APP`                                                                                                      |                                                                                               |
