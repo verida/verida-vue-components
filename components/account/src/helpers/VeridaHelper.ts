@@ -53,27 +53,49 @@ class VeridaHelpers extends EventEmitter {
 
     if (this.context) {
       this.connected = true;
+      this.emit("connected", this.context);
     }
-    this.emit("connected", this.connected);
   }
 
-  public async initProfile(): Promise<void> {
+
+  public async getProfileClient(): Promise<any> {
     const client = await this.context.getClient();
-    const profile = await client.openPublicProfile(this.did, VUE_APP_VAULT_CONTEXT_NAME);
+    return await client.openPublicProfile(this.did, VUE_APP_VAULT_CONTEXT_NAME);
+  }
+
+  public async initProfileEvent(): Promise<void> {
+    const profile = await this.getProfileClient()
     const cb = async () => {
       const data = await profile.getMany();
-      this.profile = {
-        avatar: data.avatar,
-        name: data.name,
-        country: data.country,
-        description: data.description,
-        did: this.did
+      this.buildProfileData(data)
 
-      };
       this.emit("profileChanged", this.profile);
     };
+
     profile.listen(cb);
-    await cb();
+  }
+
+  private async buildProfileData(data: any): Promise<Profile> {
+    this.profile = {
+      avatar: '',
+      name: data.name,
+      country: data.country,
+      description: data.description,
+      did: this.did
+    };
+
+    if (data.avatar && data.avatar.uri) {
+      this.profile.avatar = data.avatar.uri;
+    }
+    return this.profile
+  }
+
+  public async getProfile(): Promise<Profile> {
+    const profile = await this.getProfileClient()
+    const data = await profile.getMany();
+    const profileData = this.buildProfileData(data)
+
+    return profileData
   }
 
   async autoLogin(contextName: string) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="vda-menu" :key="connected">
+  <div class="vda-menu">
     <div class="loading" v-if="loading">Loading....</div>
     <div v-else-if="profile.name" class="vda-menu-widget" :style="styles">
       <div class="vda-dropdown">
@@ -21,15 +21,13 @@
           <span>{{ truncateDID(profile.did) }}</span>
         </div>
         <div v-show="isOpened" class="vda-dropdown-logout">
-          <div>
+          <div role="button" @click="copyToClipBoard(profile.did)">
             <img
-              role="button"
-              @click="copyToClipBoard(profile.did)"
               src="https://s3.us-west-2.amazonaws.com/assets.verida.io/icon_duplicate.svg"
               alt="icon"
               title="Copy to clipboard"
             />
-            <span> Copy DID to Clip board </span>
+            <span>{{ isCopied ? "Copied !" : "Copy DID to Clip board" }} </span>
           </div>
           <div>
             <img
@@ -72,7 +70,7 @@
         </div>
       </div>
     </div>
-    <button v-else class="login-section" @click="login">
+    <button v-else class="login-section" @click="connect">
       <span>Login with Verida</span>
       <img alt="Vue logo" src="https://assets.verida.io/arrow.svg" />
     </button>
@@ -88,8 +86,8 @@ interface Data {
   profile: any;
   error: any;
   isOpened: boolean;
-  connected: boolean;
   loading: boolean;
+  isCopied: boolean;
 }
 
 export default /*#__PURE__*/ defineComponent({
@@ -98,14 +96,10 @@ export default /*#__PURE__*/ defineComponent({
   data(): Data {
     return {
       isOpened: false,
-      connected: false,
-      profile: {
-        name: "2yime",
-        country: "American Samoa",
-        did: "did:vda:0x476Fa00518971FCC0b7B342F4b43e5f9892Cbbf8",
-      },
+      profile: {},
       loading: false,
       error: null,
+      isCopied: false,
     };
   },
   props: {
@@ -138,33 +132,23 @@ export default /*#__PURE__*/ defineComponent({
       type: Function,
       required: false,
     },
-    onSuccess: {
-      type: Function,
-      required: false,
-    },
   },
-  async beforeMount() {
-    VeridaHelper.on("connected", async () => {
-      await this.loadProfile();
-      // Clear error object after profile loads for case where public_profile DB is not found
-      this.error = "";
+  async created() {
+    VeridaHelper.on("profileChanged", (profileData) => {
+      this.profile = profileData;
     });
-    // await this.init();
-  },
-  created() {
-    VeridaHelper.on("profileChanged", (profile) => {
-      this.profile = profile;
-      if (this.profile.avatar && this.profile.avatar.uri) {
-        this.profile.avatar = this.profile.avatar.uri;
-      }
-
-      console.log(this.profile);
-    });
+    await this.init();
   },
   methods: {
     copyToClipBoard(value: string) {
       //@ts-ignore
       this.$copyText(value);
+
+      this.isCopied = true;
+
+      setTimeout(() => {
+        this.isCopied = false;
+      }, 2000);
     },
     toggleDropdown() {
       this.isOpened = !this.isOpened;
@@ -175,7 +159,7 @@ export default /*#__PURE__*/ defineComponent({
     truncateDID(did: string) {
       return did && did.slice(0, 13);
     },
-    async login() {
+    async connect() {
       this.loading = true;
       try {
         if (!this.contextName) {
@@ -185,17 +169,14 @@ export default /*#__PURE__*/ defineComponent({
           contextName: this.contextName,
           logo: this.logo,
         });
-      } catch (error) {
-        this.handleError(error);
-      }
-    },
-    async loadProfile() {
-      try {
-        this.loading = true;
-        await VeridaHelper.initProfile();
-        if (this.onSuccess) {
-          this.onSuccess(VeridaHelper.context);
-        }
+
+        const profileData = await VeridaHelper.getProfile();
+
+        // initialize profile event listener
+
+        VeridaHelper.initProfileEvent();
+
+        this.profile = profileData;
       } catch (error) {
         this.handleError(error);
       } finally {
@@ -206,22 +187,20 @@ export default /*#__PURE__*/ defineComponent({
       if (error.message === "Public database not found: profile_public") {
         this.profile.name = "unknown";
         this.error = "unknown";
-      } else {
-        this.error = error.message;
       }
+
       if (this.onError) {
         this.onError(this.error);
       }
     },
     async logout() {
       await VeridaHelper.logout();
-      this.connected = false;
       this.profile = {};
       this.onLogout();
     },
     async init() {
       if (VeridaHelper.hasSession(this.contextName) && !VeridaHelper.context) {
-        await this.login();
+        await this.connect();
       }
     },
   },
