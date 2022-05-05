@@ -87,10 +87,6 @@ export default /*#__PURE__*/ defineComponent({
       type: String,
       required: false,
     },
-    // onLogout: {
-    //   type: Function,
-    //   required: true,
-    // },
     contextName: {
       type: String,
       required: true,
@@ -99,13 +95,9 @@ export default /*#__PURE__*/ defineComponent({
       type: String,
       required: true,
     },
-    // onError: {
-    //   type: Function,
-    //   required: false,
-    // },
   },
   async created() {
-    if (VeridaHelper.profile?.avatar) {
+    if (VeridaHelper.profile?.name) {
       this.profile = VeridaHelper.profile;
     }
     VeridaHelper.on("profileChanged", (profileData) => {
@@ -143,7 +135,9 @@ export default /*#__PURE__*/ defineComponent({
 
         // initialize profile event listener
         VeridaHelper.initProfileEvent();
+
         this.profile = profileData;
+
         this.$emit("onConnected", VeridaHelper.context);
       } catch (error) {
         this.handleError(error);

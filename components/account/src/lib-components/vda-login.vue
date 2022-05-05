@@ -38,14 +38,6 @@ export default /*#__PURE__*/ defineComponent({
       type: String,
       required: false,
     },
-    // onSuccess: {
-    //   type: Function,
-    //   required: true,
-    // },
-    // onError: {
-    //   type: Function,
-    //   required: true,
-    // },
     contextName: {
       type: String,
       required: true,
@@ -80,6 +72,12 @@ export default /*#__PURE__*/ defineComponent({
           contextName: this.contextName,
           logo: this.logo,
         });
+
+        await VeridaHelper.getProfile();
+
+        // initialize profile event listener
+        VeridaHelper.initProfileEvent();
+
         this.$emit("onConnected", VeridaHelper.context);
       } catch (error) {
         this.handleError(error);
