@@ -31,19 +31,12 @@ import VeridaHelper from "../helpers/VeridaHelper";
 
 export default /*#__PURE__*/ defineComponent({
   name: "VdaLogin",
+  emits: ["onError", "onConnected"],
   components: {},
   props: {
     styles: {
       type: String,
       required: false,
-    },
-    onSuccess: {
-      type: Function,
-      required: true,
-    },
-    onError: {
-      type: Function,
-      required: true,
     },
     contextName: {
       type: String,
@@ -68,9 +61,6 @@ export default /*#__PURE__*/ defineComponent({
       error: {},
     };
   },
-  async beforeMount() {
-    await this.init();
-  },
   methods: {
     async connect() {
       this.isLoading = true;
@@ -82,21 +72,22 @@ export default /*#__PURE__*/ defineComponent({
           contextName: this.contextName,
           logo: this.logo,
         });
-        this.onSuccess(VeridaHelper.context);
+
+        await VeridaHelper.getProfile();
+
+        // initialize profile event listener
+        VeridaHelper.initProfileEvent();
+
+        this.$emit("onConnected", VeridaHelper.context);
       } catch (error) {
         this.handleError(error);
       } finally {
         this.isLoading = false;
       }
     },
-    onCancel() {
-      this.isLoading = false;
-    },
     handleError(error: any) {
       this.error = error;
-      if (this.onError) {
-        this.onError(this.error);
-      }
+      this.$emit("onError", this.error);
     },
     async init() {
       if (VeridaHelper.hasSession(this.contextName)) {

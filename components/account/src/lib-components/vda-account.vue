@@ -73,6 +73,7 @@ interface Data {
 export default /*#__PURE__*/ defineComponent({
   name: "VdaAccount",
   components: {},
+  emits: ["onLogout", "onError", "onConnected"],
   data(): Data {
     return {
       isOpened: false,
@@ -86,10 +87,6 @@ export default /*#__PURE__*/ defineComponent({
       type: String,
       required: false,
     },
-    onLogout: {
-      type: Function,
-      required: true,
-    },
     contextName: {
       type: String,
       required: true,
@@ -98,15 +95,15 @@ export default /*#__PURE__*/ defineComponent({
       type: String,
       required: true,
     },
-    onError: {
-      type: Function,
-      required: false,
-    },
   },
   async created() {
+    if (VeridaHelper.profile?.name) {
+      this.profile = VeridaHelper.profile;
+    }
     VeridaHelper.on("profileChanged", (profileData) => {
       this.profile = profileData;
     });
+
     await this.init();
   },
   methods: {
@@ -137,10 +134,11 @@ export default /*#__PURE__*/ defineComponent({
         const profileData = await VeridaHelper.getProfile();
 
         // initialize profile event listener
-
         VeridaHelper.initProfileEvent();
 
         this.profile = profileData;
+
+        this.$emit("onConnected", VeridaHelper.context);
       } catch (error) {
         this.handleError(error);
       } finally {
@@ -153,14 +151,12 @@ export default /*#__PURE__*/ defineComponent({
         this.error = "unknown";
       }
 
-      if (this.onError) {
-        this.onError(this.error);
-      }
+      this.$emit("onError", this.error);
     },
     async logout() {
       await VeridaHelper.logout();
       this.profile = {};
-      this.onLogout();
+      this.$emit("onLogout");
     },
     async init() {
       if (VeridaHelper.hasSession(this.contextName) && !VeridaHelper.context) {
