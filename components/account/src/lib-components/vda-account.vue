@@ -97,7 +97,7 @@ export default /*#__PURE__*/ defineComponent({
     },
   },
   async created() {
-    if (VeridaHelper.profile?.name) {
+    if (VeridaHelper.profile && VeridaHelper.profile.name) {
       this.profile = VeridaHelper.profile;
     }
     VeridaHelper.on("profileChanged", (profileData) => {

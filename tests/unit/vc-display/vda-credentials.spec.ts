@@ -18,7 +18,6 @@ describe("VdaCredentialView.vue", () => {
                 ...componentProps
             },
         });
-
         expect(wrapper.props().data).not.toBeUndefined();
     });
 });
