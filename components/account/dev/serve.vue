@@ -1,7 +1,6 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import { Context } from "@verida/client-ts";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -10,26 +9,10 @@ export default defineComponent({
     return {
       contextName: "Verida: New Account Component",
       logo: "https://assets.verida.io/verida_login_request_logo_170x170.png",
-      navItems: [
-        {
-          title: "Manage Token",
-          img: "https://assets.verida.io/icon_coin.svg",
-          link: "/",
-        },
-        {
-          title: "Verida Token",
-          img: "https://assets.verida.io/icon_star.svg",
-          link: "/",
-        },
-      ],
+      navItems: [],
     };
   },
-  async created() {
-    //@ts-ignore
-    this.$VeridaHelper.on("connected", (context: Context) => {
-      console.log("App context", context);
-    });
-  },
+  async created() {},
 
   methods: {
     onSuccess(response: any) {
@@ -45,18 +28,18 @@ export default defineComponent({
   <div id="app">
     <vda-account
       :logo="logo"
-      :onError="onError"
-      :contextName="contextName"
-      :onLogout="onLogout"
-      :navItems="navItems"
+      @onError="onError"
+      contextName="contextName"
+      @onLogout="onLogout"
+      @onConnected="onSuccess"
     />
     <vda-login
-      :onError="onError"
-      :onSuccess="onSuccess"
+      @onError="onError"
+      @onConnected="onSuccess"
       :contextName="contextName"
       :logo="logo"
       loginText="Verida Vue Component"
-      :onLogout="onLogout"
+      @onLogout="onLogout"
     />
   </div>
 </template>
