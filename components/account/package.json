@@ -25,8 +25,8 @@
 		"publish": "yarn build && lerna publish"
 	},
 	"dependencies": {
-		"@verida/account-web-vault": "^1.1.11",
-		"@verida/client-ts": "^1.1.14",
+		"@verida/account-web-vault": "^1.1.12",
+		"@verida/client-ts": "^1.1.15",
 		"store": "^2.0.12",
 		"vue-clipboard2": "^0.3.3"
 	},
