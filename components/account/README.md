@@ -142,7 +142,17 @@ export default defineComponent({
 | logo            | string   | false    | 170x170 png file                                                                                                                            |
 | contextName     | string   | true     | application name e.g `Verida : My APP`                                                                                                      |
 | onLogout        | function | true     | a callback function to perform logout action                                                                                                |
+| navItems        | array of object | true     | an array of object that has list of additional navItems that can be added to the original navItems  
 
+- navitems `interface`
+
+```js
+      {
+          title:string;
+          img: string;
+          link: string;
+        }
+```                                                                                               
 2. `vda-login`
 
 | Props           | Type     | Required | Description                                                                                                                                 |

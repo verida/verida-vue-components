@@ -9,6 +9,7 @@ export default defineComponent({
     return {
       contextName: "Verida: New Account Component",
       logo: "https://assets.verida.io/verida_login_request_logo_170x170.png",
+      navItems: [],
     };
   },
   async created() {},
