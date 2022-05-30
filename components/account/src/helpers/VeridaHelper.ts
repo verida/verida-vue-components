@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { EnvironmentType, Network } from "@verida/client-ts";
 import { EventEmitter } from "events";
-
 import { VaultAccount, hasSession } from "@verida/account-web-vault";
 
 import { Profile, Connect } from "../interface";
@@ -9,15 +8,13 @@ import { Profile, Connect } from "../interface";
 
 const VUE_APP_VAULT_CONTEXT_NAME = "Verida: Vault";
 
-export const VERIDA_SESSION = '_verida_auth_context';
-
 
 const VUE_APP_LOGO_URL =
   "https://assets.verida.io/verida_login_request_logo_170x170.png";
 
 class VeridaHelpers extends EventEmitter {
   public profile: Profile | null;
-  public context: any;
+  public context?: any;
   private account: any;
   public did?: string;
   public connected?: boolean;
@@ -65,14 +62,14 @@ class VeridaHelpers extends EventEmitter {
 
   public async initProfileEvent(): Promise<void> {
     const profile = await this.getProfileClient()
-    const cb = async () => {
+    const profileCallback = async () => {
       const data = await profile.getMany();
       this.buildProfileData(data)
 
       this.emit("profileChanged", this.profile);
     };
 
-    profile.listen(cb);
+    profile.listen(profileCallback);
   }
 
   private async buildProfileData(data: any): Promise<Profile> {
@@ -96,12 +93,6 @@ class VeridaHelpers extends EventEmitter {
     const profileData = this.buildProfileData(data)
 
     return profileData
-  }
-
-  async autoLogin(contextName: string) {
-    await this.connect({
-      contextName
-    })
   }
 
   hasSession(contextName: string): boolean {
