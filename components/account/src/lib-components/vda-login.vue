@@ -54,6 +54,11 @@ export default /*#__PURE__*/ defineComponent({
       type: String,
       required: false,
     },
+    openUrl: {
+      type: String,
+      required: false,
+      default: "",
+    },
   },
   data() {
     return {
@@ -71,6 +76,7 @@ export default /*#__PURE__*/ defineComponent({
         await VeridaHelper.connect({
           contextName: this.contextName,
           logo: this.logo,
+          openUrl: this.openUrl,
         });
 
         await VeridaHelper.getProfile();
