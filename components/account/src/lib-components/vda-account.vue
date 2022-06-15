@@ -117,10 +117,6 @@ export default /*#__PURE__*/ defineComponent({
       type: String,
       required: false,
     },
-    onLogout: {
-      type: Function,
-      required: true,
-    },
     contextName: {
       type: String,
       required: true,
@@ -128,6 +124,11 @@ export default /*#__PURE__*/ defineComponent({
     logo: {
       type: String,
       required: true,
+    },
+    openUrl: {
+      type: String,
+      required: false,
+      default: "",
     },
   },
   async created() {
@@ -169,6 +170,7 @@ export default /*#__PURE__*/ defineComponent({
         await VeridaHelper.connect({
           contextName: this.contextName,
           logo: this.logo,
+          openUrl: this.openUrl,
         });
 
         const profileData = await VeridaHelper.getProfile();

@@ -9,5 +9,6 @@ export type Profile = {
 
 export type Connect = {
   logo?: string;
-  contextName: string
+  contextName: string;
+  openUrl?: string
 }

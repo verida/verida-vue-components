@@ -10,6 +10,7 @@ export default defineComponent({
       contextName: "Verida: New Account Component",
       logo: "https://assets.verida.io/verida_login_request_logo_170x170.png",
       navItems: [],
+      openUrl: "http://172.20.10.3:8081/",
     };
   },
   async created() {},
@@ -28,8 +29,9 @@ export default defineComponent({
   <div id="app">
     <vda-account
       :logo="logo"
+      :openUrl="openUrl"
       @onError="onError"
-      contextName="contextName"
+      :contextName="contextName"
       @onLogout="onLogout"
       @onConnected="onSuccess"
     />

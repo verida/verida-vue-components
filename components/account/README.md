@@ -43,11 +43,12 @@ This component is used to handle SSO (Single Sign on) login it leverages our `@v
 <template>
   <div id="app">
     <vda-login
-      :onError="onError"
-      :onSuccess="onSuccess"
+      @onError="onError"
+      @onSuccess="onSuccess"
+      @onLogout="onLogout"
       :contextName="contextName"
+      :openUrl="openUrl"
       :logo="logo"
-      :onLogout="onLogout"
       :loginText: 'LOGIN_TEXT',
     />
   </div>
@@ -62,11 +63,13 @@ export default defineComponent({
     return {
       contextName: "Verida: Account Component",
       logo: "https://assets.verida.io/verida_login_request_logo_170x170.png",
+      openUrl: "http://172.20.10.3:8081/",
     };
   },
   methods: {
     onSuccess(response: any) {
-      this.$vdaClient.initUser(response);
+      console.log(response)
+      
     },
     onError(error: Error) {
       console.log("Login Error", error);
@@ -92,8 +95,10 @@ This component is used to display a logged-in user profile details such as `name
     <vda-account 
       :logo="logo"
       :contextName="contextName"
-      :onLogout="onLogout" 
-      :onError="onError"
+      :openUrl="openUrl"
+      @onLogout="onLogout" 
+      @onError="onError"
+      @onSuccess="onSuccess"
     />
   </div>
 </template>
@@ -107,6 +112,7 @@ export default defineComponent({
     return {
       contextName: "Verida: Account Component",
       logo: "https://assets.verida.io/verida_login_request_logo_170x170.png",
+      openUrl: "http://172.20.10.3:8081/",
     };
   },
   async created() {
@@ -152,7 +158,8 @@ export default defineComponent({
           img: string;
           link: string;
         }
-```                                                                                               
+```
+
 2. `vda-login`
 
 | Props           | Type     | Required | Description                                                                                                                                 |
