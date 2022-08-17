@@ -2,7 +2,7 @@
 
 Open Source Vue Components for Verida
 
-- This component can be customized to suite your application styles and themes .
+- This component can be customized to suit your application styles and themes .
 
 NB: This supports vue 3 only
 
