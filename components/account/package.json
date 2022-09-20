@@ -22,11 +22,22 @@
 		"build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
 		"build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
 		"postbuild": "rimraf ./dist/types/dev ./dist/types/src/entry.d.ts",
-		"publish": "yarn build && lerna publish"
+		"publish": "yarn build && lerna publish",
+		"format:check": "npx prettier src/ --check",
+		"format": "npx prettier src/ --write",
+		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.38.0",
+		"@typescript-eslint/parser": "^5.38.0",
 		"@verida/account-web-vault": "^1.1.12",
 		"@verida/client-ts": "^1.1.15",
+		"@vue/eslint-config-prettier": "^7.0.0",
+		"@vue/eslint-config-typescript": "^11.0.1",
+		"eslint": "^8.23.1",
+		"eslint-plugin-prettier": "^4.2.1",
+		"eslint-plugin-vue": "^9.5.1",
+		"prettier": "^2.7.1",
 		"store": "^2.0.12",
 		"vue-clipboard2": "^0.3.3"
 	},

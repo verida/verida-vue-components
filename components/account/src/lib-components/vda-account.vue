@@ -27,7 +27,7 @@
               alt="icon"
               title="Copy to clipboard"
             />
-            <span>{{ isCopied ? "Copied !" : "Copy DID to Clip board" }} </span>
+            <span>{{ isCopied ? 'Copied !' : 'Copy DID to Clip board' }} </span>
           </div>
           <div>
             <img
@@ -75,8 +75,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import VeridaHelper from "../helpers/VeridaHelper";
+import { defineComponent } from 'vue';
+import VeridaHelper from '../helpers/VeridaHelper';
 
 interface Data {
   profile: any;
@@ -94,12 +94,12 @@ declare global {
 }
 
 export default /*#__PURE__*/ defineComponent({
-  name: "VdaAccount",
+  name: 'VdaAccount',
   components: {},
-  emits: ["onLogout", "onError", "onConnected"],
+  emits: ['onLogout', 'onError', 'onConnected'],
   data(): Data {
     return {
-      logoOrigin: "https://assets.verida.io",
+      logoOrigin: 'https://assets.verida.io',
       isOpened: false,
       profile: {},
       loading: false,
@@ -132,7 +132,7 @@ export default /*#__PURE__*/ defineComponent({
     openUrl: {
       type: String,
       required: false,
-      default: "",
+      default: '',
     },
   },
 
@@ -143,7 +143,7 @@ export default /*#__PURE__*/ defineComponent({
     if (VeridaHelper.profile && VeridaHelper.profile.name) {
       this.profile = VeridaHelper.profile;
     }
-    VeridaHelper.on("profileChanged", (profileData) => {
+    VeridaHelper.on('profileChanged', (profileData) => {
       this.profile = profileData;
     });
 
@@ -174,7 +174,7 @@ export default /*#__PURE__*/ defineComponent({
       this.loading = true;
       try {
         if (!this.contextName) {
-          return (this.error = "Context Name is required");
+          return (this.error = 'Context Name is required');
         }
         await VeridaHelper.connect({
           contextName: this.contextName,
@@ -185,7 +185,7 @@ export default /*#__PURE__*/ defineComponent({
         // initialize profile event listener
         VeridaHelper.initProfileEvent();
         this.profile = profileData;
-        this.$emit("onConnected", VeridaHelper.context);
+        this.$emit('onConnected', VeridaHelper.context);
       } catch (error) {
         this.handleError(error);
       } finally {
@@ -193,17 +193,17 @@ export default /*#__PURE__*/ defineComponent({
       }
     },
     handleError(error: any) {
-      if (error.message === "Public database not found: profile_public") {
-        this.profile.name = "unknown";
-        this.error = "unknown";
+      if (error.message === 'Public database not found: profile_public') {
+        this.profile.name = 'unknown';
+        this.error = 'unknown';
       }
 
-      this.$emit("onError", this.error);
+      this.$emit('onError', this.error);
     },
     async logout() {
       await VeridaHelper.logout();
       this.profile = {};
-      this.$emit("onLogout");
+      this.$emit('onLogout');
     },
     async init() {
       if (VeridaHelper.hasSession(this.contextName) && !VeridaHelper.context) {
@@ -213,21 +213,21 @@ export default /*#__PURE__*/ defineComponent({
   },
 });
 </script>
-<style  scoped>
+<style scoped>
 @font-face {
-  font-family: "Sora";
+  font-family: 'Sora';
   font-weight: 400;
   font-style: normal;
   font-display: auto;
   unicode-range: U+000-5FF;
-  src: local("Sora"), url("../assets/fonts/Sora-Regular.ttf") format("truetype"),
-    url("../assets/fonts/Sora-ExtraBold.ttf") format("ttf"),
-    url("../assets/fonts/Sora-ExtraLight.ttf") format("ttf"),
-    url("../assets/fonts/Sora-Light.ttf") format("ttf"),
-    url("../assets/fonts/Sora-Medium.ttf") format("ttf"),
-    url("../assets/fonts/Sora-Regular.ttf") format("ttf"),
-    url("../assets/fonts/Sora-SemiBold.ttf") format("ttf"),
-    url("../assets/fonts/Sora-Thin.ttf") format("ttf");
+  src: local('Sora'), url('../assets/fonts/Sora-Regular.ttf') format('truetype'),
+    url('../assets/fonts/Sora-ExtraBold.ttf') format('ttf'),
+    url('../assets/fonts/Sora-ExtraLight.ttf') format('ttf'),
+    url('../assets/fonts/Sora-Light.ttf') format('ttf'),
+    url('../assets/fonts/Sora-Medium.ttf') format('ttf'),
+    url('../assets/fonts/Sora-Regular.ttf') format('ttf'),
+    url('../assets/fonts/Sora-SemiBold.ttf') format('ttf'),
+    url('../assets/fonts/Sora-Thin.ttf') format('ttf');
 }
 
 a {
@@ -235,7 +235,7 @@ a {
 }
 
 .vda-menu {
-  font-family: "Sora", sans-serif;
+  font-family: 'Sora', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -256,7 +256,7 @@ a {
 }
 
 .vda-menu-widget {
-  font-family: "Sora", sans-serif;
+  font-family: 'Sora', sans-serif;
   position: relative;
   font-family: sans-serif;
   display: flex;
@@ -270,7 +270,7 @@ a {
 }
 
 .vda-dropdown-profile {
-  font-family: "Sora", sans-serif;
+  font-family: 'Sora', sans-serif;
   margin: 0 0 0 1.4rem;
 }
 
@@ -330,7 +330,7 @@ a {
 }
 
 .vda-dropdown-logout {
-  font-family: "Sora", sans-serif;
+  font-family: 'Sora', sans-serif;
   position: absolute;
   top: 3.6rem;
   right: 0;
