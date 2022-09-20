@@ -105,7 +105,24 @@ export default /*#__PURE__*/ defineComponent({
 </script>
 
 <style scoped>
+@font-face {
+  font-family: "Sora";
+  font-weight: 400;
+  font-style: normal;
+  font-display: auto;
+  unicode-range: U+000-5FF;
+  src: local("Sora"), url("../assets/fonts/Sora-Regular.ttf") format("truetype"),
+    url("../assets/fonts/Sora-ExtraBold.ttf") format("ttf"),
+    url("../assets/fonts/Sora-ExtraLight.ttf") format("ttf"),
+    url("../assets/fonts/Sora-Light.ttf") format("ttf"),
+    url("../assets/fonts/Sora-Medium.ttf") format("ttf"),
+    url("../assets/fonts/Sora-Regular.ttf") format("ttf"),
+    url("../assets/fonts/Sora-SemiBold.ttf") format("ttf"),
+    url("../assets/fonts/Sora-Thin.ttf") format("ttf");
+}
+
 .login-container {
+  font-family: "Sora", sans-serif;
   text-align: center;
   width: 744px;
   display: flex;

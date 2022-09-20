@@ -84,6 +84,8 @@ export default defineComponent({
 
 This component is used to display a logged-in user profile details such as `name` , `did`and  `avatar` this happens after the `vda-login` component has been used for performing and SSO (Single Sign on) Login.
 
+- You can add a custom button in your application and call the `veridaConnect()` in the window object
+
 - You can listen for an event `connected` after a successful SSO Login , see example code below  
 
 - Example code :
@@ -100,6 +102,7 @@ This component is used to display a logged-in user profile details such as `name
       @onError="onError"
       @onSuccess="onSuccess"
     />
+    <button @click="onLogin">Connec</button>
   </div>
 </template>
 
@@ -121,6 +124,11 @@ export default defineComponent({
     });
   },
   methods: {
+    async onLogin() {
+      if (window.veridaConnect) {
+        await window.veridaConnect();
+      }
+    },
     onLogout() {
       console.log("hello");
     },

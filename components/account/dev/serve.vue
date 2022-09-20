@@ -1,6 +1,5 @@
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/no-empty-interface */
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -21,6 +20,12 @@ export default defineComponent({
     },
     onError() {},
     onLogout() {},
+
+    async onLogin() {
+      if (window.veridaConnect) {
+        await window.veridaConnect();
+      }
+    },
   },
 });
 </script>
@@ -43,5 +48,7 @@ export default defineComponent({
       loginText="Verida Vue Component"
       @onLogout="onLogout"
     />
+
+    <button @click="onLogin">Custom Login</button>
   </div>
 </template>
