@@ -1,13 +1,11 @@
 <template>
   <div class="vda-vc-display" :style="styles">
-    <h2>Credential Details</h2>
     <div class="vda-vc-content" v-for="(value, key) in credential" :key="key">
-      <span class="vda-vc-content-title">{{ caseBreakTitle(key) }}:</span>
-      <span class="vda-vc-content-value">{{ value }}</span>
+      <h2>{{ caseBreakTitle(key) }}:</h2>
+      <p>{{ value }}</p>
     </div>
   </div>
 </template>
-
 
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -66,44 +64,25 @@ export default /*#__PURE__*/ defineComponent({
   },
 });
 </script>
-
 <style scoped>
 .vda-vc-display {
-  display: block;
-  padding: 1.2rem;
-  width: 100%;
-  word-break: break-all;
+  font-family: "Sora", sans-serif;
+  line-height: 150%;
+  color: #060520;
 }
 
 .vda-vc-display h2 {
   font-weight: 600;
   font-size: 1rem;
-  line-height: 150%;
-  color: #060520;
 }
 
 .vda-vc-content {
-  display: flex;
+  display: grid;
+  grid-template-columns: 0.1fr 0.1fr;
 }
 
-.vda-vc-content-title {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 0.8rem;
-  line-height: 150%;
-  text-align: left;
-  text-transform: uppercase;
-  color: rgba(6, 5, 32, 0.51);
-  display: block;
-  margin: 0 0.5rem 0 0;
-}
-
-.vda-vc-content-value {
-  font-size: 0.9rem;
-  line-height: 150%;
-  text-align: left !important;
-  color: #060520;
-  display: block;
-  margin: 0 0.5rem;
+.vda-vc-content h2,
+p {
+  min-width: 8rem;
 }
 </style>
