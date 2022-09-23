@@ -1,4 +1,3 @@
-
 <template>
   <div class="login-container">
     <div class="loader" v-if="isLoading">
@@ -13,7 +12,7 @@
     <div class="connect" v-else>
       <div class="loader" v-if="isLoading"></div>
       <img src="https://assets.verida.io/verida_logo.svg" alt="verida-btn" />
-      <h3>{{ loginText || "Verida SSO Login" }}</h3>
+      <h3>{{ loginText || 'Verida SSO Login' }}</h3>
       <p>Use the button below to connect with Verida Vault</p>
       <button @click="connect">
         <img
@@ -26,12 +25,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import VeridaHelper from "../helpers/VeridaHelper";
+import { defineComponent } from 'vue';
+import VeridaHelper from '../helpers/VeridaHelper';
 
 export default /*#__PURE__*/ defineComponent({
-  name: "VdaLogin",
-  emits: ["onError", "onConnected"],
+  name: 'VdaLogin',
+  emits: ['onError', 'onConnected'],
   components: {},
   props: {
     styles: {
@@ -57,7 +56,7 @@ export default /*#__PURE__*/ defineComponent({
     openUrl: {
       type: String,
       required: false,
-      default: "",
+      default: '',
     },
   },
   data() {
@@ -71,7 +70,7 @@ export default /*#__PURE__*/ defineComponent({
       this.isLoading = true;
       try {
         if (!this.contextName) {
-          return (this.error = "Context Name is required");
+          return (this.error = 'Context Name is required');
         }
         await VeridaHelper.connect({
           contextName: this.contextName,
@@ -84,7 +83,7 @@ export default /*#__PURE__*/ defineComponent({
         // initialize profile event listener
         VeridaHelper.initProfileEvent();
 
-        this.$emit("onConnected", VeridaHelper.context);
+        this.$emit('onConnected', VeridaHelper.context);
       } catch (error) {
         this.handleError(error);
       } finally {
@@ -93,7 +92,7 @@ export default /*#__PURE__*/ defineComponent({
     },
     handleError(error: any) {
       this.error = error;
-      this.$emit("onError", this.error);
+      this.$emit('onError', this.error);
     },
     async init() {
       if (VeridaHelper.hasSession(this.contextName)) {
@@ -105,7 +104,24 @@ export default /*#__PURE__*/ defineComponent({
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'Sora';
+  font-weight: 400;
+  font-style: normal;
+  font-display: auto;
+  unicode-range: U+000-5FF;
+  src: local('Sora'), url('../assets/fonts/Sora-Regular.ttf') format('truetype'),
+    url('../assets/fonts/Sora-ExtraBold.ttf') format('ttf'),
+    url('../assets/fonts/Sora-ExtraLight.ttf') format('ttf'),
+    url('../assets/fonts/Sora-Light.ttf') format('ttf'),
+    url('../assets/fonts/Sora-Medium.ttf') format('ttf'),
+    url('../assets/fonts/Sora-Regular.ttf') format('ttf'),
+    url('../assets/fonts/Sora-SemiBold.ttf') format('ttf'),
+    url('../assets/fonts/Sora-Thin.ttf') format('ttf');
+}
+
 .login-container {
+  font-family: 'Sora', sans-serif;
   text-align: center;
   width: 744px;
   display: flex;
