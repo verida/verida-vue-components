@@ -4,7 +4,9 @@ version: 2
 updates:
   # Maintain dependencies for npm
   - package-ecosystem: 'npm'
-    directory: '/account-component'
+    directory: '/components/account'
     schedule:
       interval: 'weekly'
       day: 'tuesday'
+      allow: 
+      - dependency-name: "@verida/*"

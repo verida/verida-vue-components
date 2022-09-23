@@ -1,5 +1,4 @@
 name: CreateRelease
-
 on:
   push:
     branches:
