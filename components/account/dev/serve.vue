@@ -1,15 +1,15 @@
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: "ServeDev",
+  name: 'ServeDev',
   data() {
     return {
-      contextName: "Verida: New Account Component",
-      logo: "https://assets.verida.io/verida_login_request_logo_170x170.png",
+      contextName: 'Verida: New Account Component',
+      logo: 'https://assets.verida.io/verida_login_request_logo_170x170.png',
       navItems: [],
-      openUrl: "http://172.20.10.3:8081/",
+      openUrl: 'http://172.20.10.3:8081/',
     };
   },
   async created() {},
@@ -21,7 +21,7 @@ export default defineComponent({
     onError() {},
     onLogout() {},
 
-    async onLogin() {
+    async handleConnectButtonClick() {
       if (window.veridaConnect) {
         await window.veridaConnect();
       }
@@ -49,6 +49,6 @@ export default defineComponent({
       @onLogout="onLogout"
     />
 
-    <button @click="onLogin">Custom Login</button>
+    <button @click="handleConnectButtonClick">Custom Login</button>
   </div>
 </template>

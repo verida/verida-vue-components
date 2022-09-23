@@ -12,7 +12,7 @@
           <img
             v-else
             height="40"
-            :src="`${logoOrigin}/avatar.svg`"
+            :src="`${assetsOriginUrl}/avatar.svg`"
             alt="user-avatar"
           />
         </div>
@@ -23,7 +23,7 @@
         <div v-show="isOpened" class="vda-dropdown-logout">
           <div role="button" @click="copyToClipBoard(profile.did)">
             <img
-              :src="`${logoOrigin}/icon_duplicate.svg`"
+              :src="`${assetsOriginUrl}/icon_duplicate.svg`"
               alt="icon"
               title="Copy to clipboard"
             />
@@ -32,7 +32,7 @@
           <div>
             <img
               role="button"
-              :src="`${logoOrigin}/icon_search.svg`"
+              :src="`${assetsOriginUrl}/icon_search.svg`"
               alt="icon"
               title="Copy to clipboard"
             />
@@ -62,7 +62,7 @@
           >
             <img
               height="20"
-              :src="`${logoOrigin}/icon_logout.svg`"
+              :src="`${assetsOriginUrl}/icon_logout.svg`"
               alt="icon"
             />
             <span> Log out </span>
@@ -84,7 +84,7 @@ interface Data {
   isOpened: boolean;
   loading: boolean;
   isCopied: boolean;
-  logoOrigin: string;
+  assetsOriginUrl: string;
 }
 
 declare global {
@@ -99,7 +99,7 @@ export default /*#__PURE__*/ defineComponent({
   emits: ['onLogout', 'onError', 'onConnected'],
   data(): Data {
     return {
-      logoOrigin: 'https://assets.verida.io',
+      assetsOriginUrl: 'https://assets.verida.io',
       isOpened: false,
       profile: {},
       loading: false,

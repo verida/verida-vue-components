@@ -102,7 +102,7 @@ This component is used to display a logged-in user profile details such as `name
       @onError="onError"
       @onSuccess="onSuccess"
     />
-    <button @click="onLogin">Connec</button>
+    <button @click="handleConnectButtonClick">Connect</button>
   </div>
 </template>
 
@@ -124,7 +124,7 @@ export default defineComponent({
     });
   },
   methods: {
-    async onLogin() {
+    async handleConnectButtonClick() {
       if (window.veridaConnect) {
         await window.veridaConnect();
       }
