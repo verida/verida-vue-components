@@ -9,7 +9,7 @@ export default defineComponent({
       contextName: 'Verida: New Account Component',
       logo: 'https://assets.verida.io/verida_login_request_logo_170x170.png',
       navItems: [],
-      openUrl: 'http://172.20.10.3:8081/',
+      openUrl: '',
     };
   },
   async created() {},
@@ -48,7 +48,5 @@ export default defineComponent({
       loginText="Verida Vue Component"
       @onLogout="onLogout"
     />
-
-    <button @click="handleConnectButtonClick">Custom Login</button>
   </div>
 </template>
