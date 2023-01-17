@@ -212,8 +212,6 @@ export default /*#__PURE__*/ defineComponent({
     },
     async init() {
       if (VeridaHelper.hasSession(this.contextName) && !VeridaHelper.context) {
-        console.log(VeridaHelper.hasSession(this.contextName));
-
         await this.connect();
       }
     },

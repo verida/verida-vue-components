@@ -30,8 +30,6 @@
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "@typescript-eslint/parser": "^5.38.0",
-    "@verida/account-web-vault": "^2.0.1",
-    "@verida/client-ts": "^2.0.1",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.1",
     "eslint": "^8.23.1",
@@ -52,6 +50,8 @@
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-replace": "^2.4.2",
     "@types/store": "^2.0.2",
+    "@verida/account-web-vault": "^2.0.1",
+    "@verida/client-ts": "^2.0.1",
     "@vue/cli-plugin-babel": "^4.5.13",
     "@vue/cli-plugin-typescript": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
@@ -72,6 +72,8 @@
     "vue": "^3.0.5"
   },
   "peerDependencies": {
+    "@verida/account-web-vault": "^2.0.1",
+    "@verida/client-ts": "^2.0.1",
     "vue": "^3.0.5"
   },
   "engines": {
