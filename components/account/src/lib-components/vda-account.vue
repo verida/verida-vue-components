@@ -73,7 +73,7 @@
     </div>
       <button v-else class="login-section" @click="connect">
        <span>Verida Connect</span>
-      <img alt="Vue logo" src="https://assets.verida.io/arrow.svg" />
+      <img alt="Vue logo"  :src="`${assetsOriginUrl}/arrow.svg`" />
     </button>
     <div v-if="error" class="error">{{ error }}</div>
   </div>
@@ -173,7 +173,7 @@ export default /*#__PURE__*/ defineComponent({
       await this.logout();
     },
     truncateDID(did: string) {
-      return did && did.slice(0, 13);
+      return did && did.slice(0, 15);
     },
     async connect() {
       this.loading = true;
