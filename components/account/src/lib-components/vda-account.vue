@@ -5,6 +5,7 @@
       <div class="vda-dropdown">
         <div
           role="button"
+          aria-label="menu"
           @click="toggleDropdown"
           :class="[isOpened ? 'vda-dropdown-top-active' : 'vda-dropdown-top']"
         >
@@ -70,6 +71,10 @@
         </div>
       </div>
     </div>
+      <button v-else class="login-section" @click="connect">
+       <span>Verida Connect</span>
+      <img alt="Vue logo" src="https://assets.verida.io/arrow.svg" />
+    </button>
     <div v-if="error" class="error">{{ error }}</div>
   </div>
 </template>
@@ -219,7 +224,6 @@ export default /*#__PURE__*/ defineComponent({
   font-weight: 400;
   font-style: normal;
   font-display: auto;
-  unicode-range: U+000-5FF;
   src: local('Sora'), url('../assets/fonts/Sora-Regular.ttf') format('truetype'),
     url('../assets/fonts/Sora-ExtraBold.ttf') format('ttf'),
     url('../assets/fonts/Sora-ExtraLight.ttf') format('ttf'),

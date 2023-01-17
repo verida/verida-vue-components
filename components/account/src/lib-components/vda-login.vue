@@ -109,7 +109,6 @@ export default /*#__PURE__*/ defineComponent({
   font-weight: 400;
   font-style: normal;
   font-display: auto;
-  unicode-range: U+000-5FF;
   src: local('Sora'), url('../assets/fonts/Sora-Regular.ttf') format('truetype'),
     url('../assets/fonts/Sora-ExtraBold.ttf') format('ttf'),
     url('../assets/fonts/Sora-ExtraLight.ttf') format('ttf'),
