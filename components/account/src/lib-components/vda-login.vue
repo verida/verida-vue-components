@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="loader" v-if="isLoading">
-      <div class="loader1">
+      <div class="loader-icon">
         <span></span>
         <span></span>
         <span></span>
@@ -42,10 +42,6 @@ export default /*#__PURE__*/ defineComponent({
       required: true,
     },
     logo: {
-      type: String,
-      required: false,
-    },
-    loaderIconColor: {
       type: String,
       required: false,
     },
@@ -173,12 +169,12 @@ export default /*#__PURE__*/ defineComponent({
   height: 20rem;
 }
 
-.loader1 {
+.loader-icon {
   display: inline-block;
   font-size: 0px;
   padding: 0px;
 }
-.loader1 span {
+.loader-icon span {
   vertical-align: middle;
   border-radius: 100%;
 
@@ -186,30 +182,30 @@ export default /*#__PURE__*/ defineComponent({
   width: 10px;
   height: 10px;
   margin: 3px 2px;
-  -webkit-animation: loader1 0.8s linear infinite alternate;
-  animation: loader1 0.8s linear infinite alternate;
+  -webkit-animation: loader-icon 0.8s linear infinite alternate;
+  animation: loader-icon 0.8s linear infinite alternate;
 }
-.loader1 span:nth-child(1) {
+.loader-icon span:nth-child(1) {
   -webkit-animation-delay: -1s;
   animation-delay: -1s;
   background: rgba(0, 0, 0, 0.6);
 }
-.loader1 span:nth-child(2) {
+.loader-icon span:nth-child(2) {
   -webkit-animation-delay: -0.8s;
   animation-delay: -0.8s;
   background: rgba(22, 13, 14, 0.8);
 }
-.loader1 span:nth-child(3) {
+.loader-icon span:nth-child(3) {
   -webkit-animation-delay: -0.26666s;
   animation-delay: -0.26666s;
   background: rgb(14, 1, 2);
 }
-.loader1 span:nth-child(4) {
+.loader-icon span:nth-child(4) {
   -webkit-animation-delay: -0.8s;
   animation-delay: -0.8s;
   background: rgba(27, 4, 6, 0.8);
 }
-.loader1 span:nth-child(5) {
+.loader-icon span:nth-child(5) {
   -webkit-animation-delay: -1s;
   animation-delay: -1s;
   background: rgba(0, 0, 0, 0.4);
