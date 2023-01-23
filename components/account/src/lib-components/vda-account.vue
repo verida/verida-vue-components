@@ -186,9 +186,6 @@ export default /*#__PURE__*/ defineComponent({
     async disconnect() {
       await this.logout();
     },
-    truncateDID(did: string) {
-      return did && did.slice(0, 15);
-    },
     async connect() {
       this.loading = true;
       try {
