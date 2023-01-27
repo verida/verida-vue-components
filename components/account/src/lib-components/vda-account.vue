@@ -19,7 +19,7 @@
         </div>
         <div class="vda-dropdown-profile">
           <span>{{ profile.name }}</span>
-          <span>{{ truncateDID }}</span>
+          <span>{{ truncateDid }}</span>
         </div>
         <div v-show="isOpened" class="vda-dropdown-logout">
           <div role="button" @click="copyToClipBoard(profile.did)">
@@ -138,23 +138,17 @@ export default /*#__PURE__*/ defineComponent({
   },
 
   computed: {
-    /** method to remove the "testnet" part in the did and trucate into e.g "did:vda:0x2449.."  format */
-    truncateDID(): string {
-      const did = this.profile.did;
-      
-      const splittedDid = did.split(':');
-      
-      const startIndexToTruncateDid =
-        splittedDid[0].length + splittedDid[1].length;
-     
-      const truncatedDid = `${splittedDid[0]}:${
-        splittedDid[1]
-      }:${splittedDid[3].slice(
-        startIndexToTruncateDid,
-        9
-      )}..${splittedDid[3].slice(-2)}`;
+    /**
+     * method to remove the "testnet" part in the did and trucate into e.g "did:vda:0x2449.."  format
+     */
+    truncateDid(): string {
+      const splittedDid = this.profile.did.split(':');
+      const lastIndex = splittedDid.length - 1;
+      const publicAddress = splittedDid[lastIndex];
+      const truncatePublicAddress = publicAddress.slice(0, 4);
+      splittedDid[lastIndex] = truncatePublicAddress;
 
-      return truncatedDid;
+      return `${splittedDid.join(':')}...`;
     },
   },
 
@@ -174,7 +168,9 @@ export default /*#__PURE__*/ defineComponent({
 
   methods: {
     copyToClipBoard(value: string) {
-      navigator.clipboard?.writeText(value);
+     // @ts-ignore
+      this.$copyText(value);
+      
       this.isCopied = true;
       setTimeout(() => {
         this.isCopied = false;
@@ -250,9 +246,9 @@ a {
 }
 
 header {
-display: flex;
-justify-content: space-between;
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .vda-menu {
@@ -286,7 +282,7 @@ align-items: center;
 
 .vda-dropdown-profile {
   font-family: 'Sora', sans-serif;
-  margin: 0 0 0 1.4rem;
+  margin: 0 0 0 0.5rem;
 }
 
 .vda-dropdown-profile span:nth-child(1) {
@@ -350,7 +346,7 @@ align-items: center;
   top: 3.6rem;
   right: 0;
   width: 100%;
-  min-width: 21rem; 
+  min-width: 21rem;
   background: #ffffff;
   border: 1px solid #ededed;
   box-shadow: 0px 24px 40px rgba(6, 5, 32, 0.08);
