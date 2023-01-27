@@ -1,8 +1,7 @@
 import { App, Plugin } from 'vue';
-
+import VueClipboard from 'vue-clipboard2';
 // Import vue components
 import * as components from '@/lib-components/index';
-import VueClipboard from 'vue-clipboard2';
 
 const install: Exclude<Plugin['install'], undefined> = function installAccount(
   app: App

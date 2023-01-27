@@ -19,7 +19,7 @@
         </div>
         <div class="vda-dropdown-profile">
           <span>{{ profile.name }}</span>
-          <span>{{ truncateDID(profile.did) }}</span>
+          <span>{{ truncateDid }}</span>
         </div>
         <div v-show="isOpened" class="vda-dropdown-logout">
           <div role="button" @click="copyToClipBoard(profile.did)">
@@ -71,9 +71,9 @@
         </div>
       </div>
     </div>
-      <button v-else class="login-section" @click="connect">
-       <span>Verida Connect</span>
-      <img alt="Vue logo"  :src="`${assetsOriginUrl}/arrow.svg`" />
+    <button v-else class="login-section" @click="connect">
+      <span>Verida Connect</span>
+      <img alt="Vue logo" :src="`${assetsOriginUrl}/arrow.svg`" />
     </button>
     <div v-if="error" class="error">{{ error }}</div>
   </div>
@@ -122,10 +122,6 @@ export default /*#__PURE__*/ defineComponent({
       required: false,
       default: [],
     },
-    loaderIconColor: {
-      type: String,
-      required: false,
-    },
     contextName: {
       type: String,
       required: true,
@@ -138,6 +134,21 @@ export default /*#__PURE__*/ defineComponent({
       type: String,
       required: false,
       default: '',
+    },
+  },
+
+  computed: {
+    /**
+     * method to remove the "testnet" part in the did and trucate into e.g "did:vda:0x2449.."  format
+     */
+    truncateDid(): string {
+      const splittedDid = this.profile.did.split(':');
+      const lastIndex = splittedDid.length - 1;
+      const publicAddress = splittedDid[lastIndex];
+      const truncatePublicAddress = publicAddress.slice(0, 4);
+      splittedDid[lastIndex] = truncatePublicAddress;
+
+      return `${splittedDid.join(':')}...`;
     },
   },
 
@@ -157,11 +168,10 @@ export default /*#__PURE__*/ defineComponent({
 
   methods: {
     copyToClipBoard(value: string) {
-      // @ts-ignore
+     // @ts-ignore
       this.$copyText(value);
-
+      
       this.isCopied = true;
-
       setTimeout(() => {
         this.isCopied = false;
       }, 2000);
@@ -171,9 +181,6 @@ export default /*#__PURE__*/ defineComponent({
     },
     async disconnect() {
       await this.logout();
-    },
-    truncateDID(did: string) {
-      return did && did.slice(0, 15);
     },
     async connect() {
       this.loading = true;
@@ -238,11 +245,14 @@ a {
   text-decoration: none;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .vda-menu {
   font-family: 'Sora', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .login-section {
@@ -263,9 +273,6 @@ a {
   font-family: 'Sora', sans-serif;
   position: relative;
   font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .vda-menu-widget-title {
@@ -275,7 +282,7 @@ a {
 
 .vda-dropdown-profile {
   font-family: 'Sora', sans-serif;
-  margin: 0 0 0 1.4rem;
+  margin: 0 0 0 0.5rem;
 }
 
 .vda-dropdown-profile span:nth-child(1) {
@@ -338,7 +345,8 @@ a {
   position: absolute;
   top: 3.6rem;
   right: 0;
-  width: 21rem;
+  width: 100%;
+  min-width: 21rem;
   background: #ffffff;
   border: 1px solid #ededed;
   box-shadow: 0px 24px 40px rgba(6, 5, 32, 0.08);
