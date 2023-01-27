@@ -211,7 +211,7 @@ export default /*#__PURE__*/ defineComponent({
   background: rgba(0, 0, 0, 0.4);
 }
 
-@keyframes loader1 {
+@keyframes loader {
   from {
     transform: scale(0, 0);
   }
@@ -219,7 +219,7 @@ export default /*#__PURE__*/ defineComponent({
     transform: scale(1, 1);
   }
 }
-@-webkit-keyframes loader1 {
+@-webkit-keyframes loader {
   from {
     -webkit-transform: scale(0, 0);
   }
