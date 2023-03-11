@@ -1,6 +1,7 @@
-import { EnvironmentType, Network } from '@verida/client-ts';
+import { Network } from '@verida/client-ts';
 import { EventEmitter } from 'events';
 import { VaultAccount, hasSession } from '@verida/account-web-vault';
+import { EnvironmentType } from '@verida/types'
 
 import { Profile, Connect } from '../interface';
 
