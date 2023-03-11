@@ -45,6 +45,7 @@
     "@typescript-eslint/parser": "^5.38.0",
     "@verida/account-web-vault": "^2.0.1",
     "@verida/client-ts": "^2.0.1",
+    "@verida/types": "^2.2.0",
     "@vue/cli-plugin-babel": "^4.5.13",
     "@vue/cli-plugin-typescript": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
@@ -71,8 +72,9 @@
     "vue": "^3.0.5"
   },
   "peerDependencies": {
-    "@verida/account-web-vault": "^2.0.1",
-    "@verida/client-ts": "^2.0.1",
+    "@verida/account-web-vault": "^2.2.0",
+    "@verida/client-ts": "^2.2.0",
+    "@verida/types": "^2.2.0",
     "vue": "^3.0.5"
   },
   "engines": {
